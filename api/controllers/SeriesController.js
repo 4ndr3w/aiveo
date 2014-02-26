@@ -15,10 +15,25 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var tvdb = require("cachedTVDB");
+
 module.exports = {
     
+    search: function(req,res) {
+    	var results = tvdb.searchForSeries(req.param("query"), function(results)
+    	{
+    		console.log(results);
+    		res.view({results:results});
+    	});
+    },
   
-
+	view: function(req,res) {
+		var series = tvdb.getSeriesInfo(req.param("series"), function(series, episode)
+		{
+		console.log(series);
+			res.view({series: series});
+		});
+	},
 
   /**
    * Overrides for the settings in `config/controllers.js`

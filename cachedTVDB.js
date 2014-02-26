@@ -12,16 +12,36 @@ function searchForSeries(name, callback)
 		if ( err || !result )
 		{
 			tvdb.getSeries(name, function(err, results)
-			{
+			{			
 				if ( err || !results )
 					callback([]);
 				else
 				{
 					if ( !Array.isArray(results.Data.Series) )
 						results.Data.Series = [results.Data.Series];
-					redis.set(name+"-search", JSON.stringify(results), redislib.print);
-					callback(results.Data.Series);
+					var current = 0;
+					function processPosterArt()
+					{
+						if ( current < results.Data.Series.length )
+						{
+							getSeriesInfo(results.Data.Series[current].seriesid, function(series, episodes)
+							{
+								results.Data.Series[current] = series;
+								current++;
+								processPosterArt();
+							});
+						}
+						else
+						{
+							
+							redis.set(name+"-search", JSON.stringify(results), redislib.print);
+							callback(results.Data.Series);
+						}
+					}
+					processPosterArt();
 				}
+				
+					
 			});
 		}
 		else
@@ -55,6 +75,7 @@ function getSeriesInfo(seriesID, callback)
 		{
 			fetchAllSeriesInfo(seriesID, function(info, episodes)
 			{
+				info.poster = banners_mirror+info.poster;
 				callback(info);
 			});
 		}
@@ -94,12 +115,16 @@ function getPoster(seriesID, callback)
         	{
                 var highestRated = -1;
                 var toBeat = -1;
+                if ( banner.Banners.Banner == undefined )
+                {
+                	callback(default_poster);
+                	return;
+                }
                 for ( var i = 0; i < banner.Banners.Banner.length; i++ )
                 {
                         thisBanner = banner.Banners.Banner[i];
                         if ( thisBanner.BannerType == "poster" )
                         {
-                                thisBanner.Rating = thisBanner.Rating*thisBanner.RatingCount;
                                 if ( thisBanner.Rating > toBeat )
                                 {
                                         toBeat = thisBanner.Rating;
