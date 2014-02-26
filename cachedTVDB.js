@@ -2,8 +2,8 @@ var tvdb = require("thetvdb-api")("330AB5AC7F0792B4"),
 	redislib = require("redis"),
     redis = redislib.createClient();
 
-default_poster = "no poster";
-banners_mirror = "http://thetvdb.com/banners/";
+var default_poster = "no poster";
+var banners_mirror = "http://thetvdb.com/banners/";
 
 function searchForSeries(name, callback)
 {
