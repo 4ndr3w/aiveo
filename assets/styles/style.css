@@ -1,0 +1,25 @@
+.navbar-black
+{
+	background-color:black; 
+	color:grey;
+}
+
+.navbar-black a
+{
+	color:grey;
+}
+
+.navbar-black li:hover
+{
+	background-color: black;
+}
+
+.search-form
+{
+	width: 240px;
+}
+
+.smallimage
+{
+	width: 100px;
+}

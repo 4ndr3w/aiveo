@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%- title %></title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <link rel="stylesheet" type="text/css" href="/styles/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/styles/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="/styles/style.css">
+
+  </head>
+
+  <body>
+
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  		<div class="container">
+  			<a class="navbar-brand" href="/">Aiveo</a>
+  			<ul class="nav navbar-nav">
+  				<li><a href="/library">Library</a></li>
+  				<li><a href="/friends">Friends</a></li>
+  				<li><a href="/recommendations">Recommendations</a></li>
+  			</ul>
+  			
+  			 <form class="navbar-form search-form pull-right" action="/series/search" method="get">
+        		<div class="input-group">
+          			<input type="search" name="search" class="form-control" placeholder="Search">
+          			<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+        		</div>
+      		</form>
+  		</div>
+	</nav>
+
+    <%- body %>
+	<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    </body>
+</html>
