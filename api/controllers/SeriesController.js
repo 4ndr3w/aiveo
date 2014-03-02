@@ -15,7 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var tvdb = require("cachedTVDB");
+var tvdb = require("../../cachedTVDB");
 
 module.exports = {
     
@@ -30,7 +30,6 @@ module.exports = {
 	view: function(req,res) {
 		var series = tvdb.getSeriesInfo(req.param("series"), function(series, episode)
 		{
-		console.log(series);
 			res.view({series: series});
 		});
 	},

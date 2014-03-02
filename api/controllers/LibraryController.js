@@ -1,5 +1,5 @@
 /**
- * UserController
+ * LibraryController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -15,13 +15,14 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-
-
 module.exports = {
     
+  
+
+
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to UserController)
+   * (specific to LibraryController)
    */
   _config: {}
 

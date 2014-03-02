@@ -23,3 +23,8 @@
 {
 	width: 100px;
 }
+
+.overflow-visible
+{
+	overflow: visible;
+}

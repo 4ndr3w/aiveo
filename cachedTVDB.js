@@ -33,7 +33,6 @@ function searchForSeries(name, callback)
 						}
 						else
 						{
-							
 							redis.set(name+"-search", JSON.stringify(results), redislib.print);
 							callback(results.Data.Series);
 						}
@@ -60,6 +59,7 @@ function fetchAllSeriesInfo(seriesID, callback)
 			callback(undefined, undefined);
 		else
 		{
+			data.Data.Series.poster = banners_mirror+data.Data.Series.poster;
 			redis.set(seriesID+"-info", JSON.stringify(data.Data.Series), redislib.print);
 			redis.set(seriesID+"-episodes", JSON.stringify(data.Data.Episode), redislib.print);
 			callback(data.Data.Series, data.Data.Episode);
@@ -75,7 +75,6 @@ function getSeriesInfo(seriesID, callback)
 		{
 			fetchAllSeriesInfo(seriesID, function(info, episodes)
 			{
-				info.poster = banners_mirror+info.poster;
 				callback(info);
 			});
 		}
