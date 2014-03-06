@@ -65,11 +65,20 @@ function fetchAllSeriesInfo(seriesID, callback)
 			{
 				if ( err ) console.log("Memcache set error!");
 			}, 864000);
-			memcache.set(seriesID+"-episodes", JSON.stringify(data.Data.Episode), function(err)
+
+			var episodes = new Array();
+
+			for ( ep in data.Data.Episode )
+			{
+				if ( data.Data.Episode[ep].SeasonNumber != 0 )
+					episodes.push(data.Data.Episode[ep]);
+			}
+
+			memcache.set(seriesID+"-episodes", JSON.stringify(episodes), function(err)
 			{
 				if ( err ) console.log("Memcache set error!");
 			}, 864000);
-			callback(data.Data.Series, data.Data.Episode);
+			callback(data.Data.Series, episodes);
 		}
 	});
 }
