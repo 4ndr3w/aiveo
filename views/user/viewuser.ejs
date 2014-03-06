@@ -1,0 +1,87 @@
+<div class="container">
+	<h1><%= username %></h1>
+	<br>
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Currently Watching</h3></div>
+
+	  <table class="table">
+		  <tr>
+			  <th>Series</th>
+			  <th>Progress</th>
+		  </tr>
+		  <% for (var i = 0; i < library.length; i++ ) 
+		  	 { 
+			    if ( library[i].status == "Currently Watching" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
+			  <td><%= library[i].progress %>/<%= library[i].totalEpisodes %></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+	</div>
+	
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Plan to Watch</h3></div>
+
+	  <table class="table">
+		  <tr>
+			  <th>Series</th>
+		  </tr>
+		  <% for (var i = 0; i < library.length; i++ ) 
+		  	 { 
+			    if ( library[i].status == "Plan to Watch" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+	</div>
+	
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Completed</h3></div>
+
+	  <table class="table">
+		  <tr>
+			  <th>Series</th>
+		  </tr>
+		  <% for (var i = 0; i < library.length; i++ ) 
+		  	 { 
+			    if ( library[i].status == "Completed" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+	</div>
+	
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Dropped</h3></div>
+
+	  <table class="table">
+		  <tr>
+			  <th>Series</th>
+			  <th>Progress</th>
+		  </tr>
+		  <% for (var i = 0; i < library.length; i++ ) 
+		  	 { 
+			    if ( library[i].status == "Dropped" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
+			  <td><%= library[i].progress %>/<%= library[i].totalEpisodes %></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+	</div>
+</div>

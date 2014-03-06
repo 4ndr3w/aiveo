@@ -11,28 +11,132 @@ module.exports = {
 	
 	updateForUser: function(user, series, status)
 	{
-		WatchingStatus.find({user: user.id, series: series.id}).done(function(e, obj)
+		Library.findOne({user: user, series: series}).done(function(e, obj)
 		{
 			if ( !e && obj )
 			{
+				console.log(obj);
 				obj.status = status;
-				
+				obj.save(function(err)
+				{
+					// done
+				});
+			}
+			else
+			{
+				Library.create({user: user, series: series, status: status}).done(function(e, obj)
+				{
+					return;
+				});
 			}
 		})
-	};
+	},
 	
 	getStatusForSeries: function(user, series, callback)
 	{
-		WatchingStatus.find({user: user.id, series: series.id}).done(function(e, obj)
+		Library.findOne({user: user, series: series}).done(function(e, obj)
 		{
 			if ( !e && obj )
 				callback(obj.status);
 			else
-				callback()
+				callback("Add to Library");
 		});
-	}
+	},
+	
+	getForUsers: function(friends, callback)
+	{
+		if ( friends == undefined )
+		{
+			callback(null, []);
+			return;
+		}
+		
+		var data = [];
+		var index = 0;
+		function fetch()
+		{
+			
+			console.log(data);
+			if ( index < friends.length )
+			{
+				User.findOneByUsername(friends[index], function (err, user)
+				{
+
+					Library.find({user: user.id}).done(function(err, obj)
+					{
+						if ( obj != undefined )
+						{
+							if ( !Array.isArray(obj) )
+								obj = [obj];
+							for ( var i = 0; i < obj.length; i++ )
+							{
+								obj[i].username = friends[index];	
+							}
+							data = data.concat(obj);
+						}
+						index++;
+						fetch();
+					});
+				});
+			}
+			else
+				callback(null, data);
+		}
+		fetch();
+	},
+	
+	getForUsersAndSeries: function(series, friends, callback)
+	{
+		if ( friends == undefined )
+		{
+			callback(null, []);
+			return;
+		}
+		
+		var data = [];
+		var index = 0;
+		function fetch()
+		{
+			if ( index < friends.length )
+			{
+				User.findOneByUsername(friends[index], function (err, user)
+				{
+					if ( user != undefined && !err)
+					{
+						Library.find({user: user.id, series: series}, function(err, obj)
+						{
+							if ( !Array.isArray(obj) )
+								obj = [obj];
+							for ( var i = 0; i < obj.length; i++ )
+							{
+								obj[i].username = friends[index];	
+							}
+							data = data.concat(obj);
+							index++;
+							fetch();
+						});
+					}
+					else
+					{
+						index++;
+						fetch();
+					}
+				});
+			}
+			else
+				callback(null, data);
+		}
+		fetch();
+	},
 	
   attributes: {
+	  id: {
+	      type: 'integer',
+	      autoIncrement: true,
+	      primaryKey: true,
+	      unique: true
+	    },	  
+	  
   	user: {
   		type: 'integer',
   		required: true
@@ -45,8 +149,15 @@ module.exports = {
     
     status: {
     	type: 'string',
-    	required: true
+    	required: true,
+		in: ["Plan to Watch", "Currently Watching", "Completed", "Dropped"]
     },
+	
+	progress: {
+		type: 'integer',
+		required: true,
+		defaultsTo: 0
+	},
     
     getSeries: function(callback) {
     	tvdb.getSeriesInfo(this.series, callback);

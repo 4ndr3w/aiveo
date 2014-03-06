@@ -1,0 +1,23 @@
+body
+{
+	margin-top: 150px;
+	background-image: url("/images/welcomebg.png");
+	color:white;
+}
+
+input 
+{
+	color: black;
+}
+
+
+
+h1 
+{
+	font-size: 90px;
+}
+
+.centered
+{
+	text-align:center;
+}

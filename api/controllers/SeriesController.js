@@ -22,15 +22,41 @@ module.exports = {
     search: function(req,res) {
     	var results = tvdb.searchForSeries(req.param("query"), function(results)
     	{
-    		console.log(results);
-    		res.view({results:results});
+    		Library.findByUser(req.session.user.id, function(err, userLibrary)
+			{
+				function getLibraryStatus(seriesID)
+				{
+					for ( var i = 0; i < userLibrary.length; i++ )
+					{
+						if ( userLibrary[i].series == seriesID )
+							return userLibrary[i].status;
+					}
+					return "Add to Library";
+				}
+				res.view({results:results, getLibraryStatus: getLibraryStatus, session: req.session});
+			});
+    		
     	});
     },
   
 	view: function(req,res) {
-		var series = tvdb.getSeriesInfo(req.param("series"), function(series, episode)
+		tvdb.getSeriesInfo(req.param("series"), function(series)
 		{
-			res.view({series: series});
+			tvdb.getSeriesEpisodeInfo(req.param("series"), function(episodes)
+			{
+				Library.findOne({user:req.session.user.id, series:req.param("series")}, function(err, entry)
+				{
+					if ( entry == undefined )
+						entry = {status: "Add to Library", progress: 0};
+					User.findOneById(req.session.user.id, function (err, loggedinUser)
+					{
+						Library.getForUsersAndSeries(req.param("series"), loggedinUser.friends, function(err, friendWatchingData)
+						{
+							res.view({series: series, watchingStatus: entry.status, totalEpisodes:episodes.length, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData});
+						});
+					});
+				});
+			});
 		});
 	},
 

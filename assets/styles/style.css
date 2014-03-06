@@ -28,3 +28,34 @@
 {
 	overflow: visible;
 }
+
+
+.series-big-image
+{
+	display:inline;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	width: 200px;
+}
+
+
+.series-big-header
+{
+	display:inline-block;
+}
+
+.series-big-addbutton
+{
+	margin-top:20px;
+}
+
+.fixed-thumbnail
+{
+	width: 180px;
+}
+
+.centerdiv
+{
+	margin:auto;
+	float: none;
+}

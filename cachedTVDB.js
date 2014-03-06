@@ -1,13 +1,13 @@
 var tvdb = require("thetvdb-api")("330AB5AC7F0792B4"),
-	redislib = require("redis"),
-    redis = redislib.createClient();
+	memcachelib = require('memcached'),
+	memcache = new memcachelib(process.env.MEMCACHEDCLOUD_SERVERS);
 
 var default_poster = "no poster";
 var banners_mirror = "http://thetvdb.com/banners/";
 
 function searchForSeries(name, callback)
 {
-	redis.get(name+"-search", function(err, result)
+	memcache.get(name+"-search", function(err, result)
 	{
 		if ( err || !result )
 		{
@@ -33,14 +33,15 @@ function searchForSeries(name, callback)
 						}
 						else
 						{
-							redis.set(name+"-search", JSON.stringify(results), redislib.print);
+							memcache.set(name+"-search", JSON.stringify(results), 864000, function(err)
+							{
+								if ( err ) console.log("Memcache set error!");
+							});
 							callback(results.Data.Series);
 						}
 					}
 					processPosterArt();
-				}
-				
-					
+				}	
 			});
 		}
 		else
@@ -60,8 +61,14 @@ function fetchAllSeriesInfo(seriesID, callback)
 		else
 		{
 			data.Data.Series.poster = banners_mirror+data.Data.Series.poster;
-			redis.set(seriesID+"-info", JSON.stringify(data.Data.Series), redislib.print);
-			redis.set(seriesID+"-episodes", JSON.stringify(data.Data.Episode), redislib.print);
+			memcache.set(seriesID+"-info", JSON.stringify(data.Data.Series), 864000, function(err)
+			{
+				if ( err ) console.log("Memcache set error!");
+			});
+			memcache.set(seriesID+"-episodes", JSON.stringify(data.Data.Episode), 864000, function(err)
+			{
+				if ( err ) console.log("Memcache set error!");
+			});
 			callback(data.Data.Series, data.Data.Episode);
 		}
 	});
@@ -69,7 +76,7 @@ function fetchAllSeriesInfo(seriesID, callback)
 
 function getSeriesInfo(seriesID, callback)
 {
-	redis.get(seriesID+"-info", function(err, result)
+	memcache.get(seriesID+"-info", function(err, result)
 	{
 		if ( err || !result )
 		{
@@ -87,7 +94,7 @@ function getSeriesInfo(seriesID, callback)
 
 function getSeriesEpisodeInfo(seriesID, callback)
 {
-	redis.get(seriesID+"-episodes", function(err, result)
+	memcache.get(seriesID+"-episodes", function(err, result)
 	{
 		if ( err || !result )
 		{
@@ -106,7 +113,7 @@ function getSeriesEpisodeInfo(seriesID, callback)
 
 function getPoster(seriesID, callback)
 {
-	redis.get(seriesID+"-poster", function(err, result)
+	memcache.get(seriesID+"-poster", function(err, result)
 	{
 		if ( err || !result )
 		{
@@ -135,7 +142,10 @@ function getPoster(seriesID, callback)
                 if ( highestRated != -1 )
                 {
                 	url = banners_mirror+banner.Banners.Banner[highestRated].BannerPath;
-                    redis.set(seriesID+"-poster", url, redislib.print);
+                    memcache.set(seriesID+"-poster", url, 864000, function(err)
+					{
+						if ( err ) console.log("Memcache set error!");
+					});
                     callback(url);
                 }
                 else

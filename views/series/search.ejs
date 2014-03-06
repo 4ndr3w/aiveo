@@ -8,7 +8,7 @@
   <div class="media-body overflow-visible">
   	<div class="pull-right btn-group">
     	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    		<span id="series<%= results[i].id %>status">Action</span> <span class="caret"></span>
+    		<span id="series<%= results[i].id %>status"><%= getLibraryStatus(results[i].id) %></span> <span class="caret"></span>
  		</button>
   		<ul class="dropdown-menu" role="menu">
     		<li><a href="#" onClick="planToWatchSeries(<%= results[i].id %>)">Plan to Watch</a></li>

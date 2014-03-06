@@ -1,0 +1,41 @@
+<div class="container">
+	<h3>What your friends are watching:</h3>
+	<br>
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Currently Watching</h3></div>
+
+	  <table class="table">
+		  <% for ( f in friends ) 
+		  	 { 
+			    if ( friends[f].status == "Currently Watching" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/user/<%= friends[f].username %>"><%= friends[f].username %></a></td>
+			  <td><span class="pull-right"><a href="/series/view?series=<%= friends[f].series.id %>"><%= friends[f].series.SeriesName %></a> <%= friends[f].progress %>/<%= friends[f].totalEpisodes %></span></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+	</div>
+
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Plan to Watch</h3></div>
+
+	  <table class="table">
+		  <% for ( f in friends ) 
+		  	 { 
+			    if ( friends[f].status == "Plan to Watch" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/user/<%= friends[f].username %>"><%= friends[f].username %></a></td>
+			  <td><span class="pull-right"><a href="/series/view?series=<%= friends[f].series.id %>"><%= friends[f].series.SeriesName %></a></span></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+
+	</div>
+  <a href="/friends/manage">Manage Friends</a>
+</div>

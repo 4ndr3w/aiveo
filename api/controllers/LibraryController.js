@@ -15,10 +15,65 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var tvdb = require("../../cachedTVDB");
+
 module.exports = {
     
+	index: function(req,res)
+	{
+		Library.findByUser(req.session.user.id).done(function (err, userLibrary)
+		{
+			var index = 0;
+			function getData()
+			{
+				if ( index < userLibrary.length )
+				{
+					tvdb.getSeriesInfo(userLibrary[index].series, function (info)
+					{
+						tvdb.getSeriesEpisodeInfo(userLibrary[index].series, function (episodes)
+						{
+							userLibrary[index].series = info;
+							userLibrary[index].totalEpisodes = episodes.length;
+							index++;
+							getData();
+						});
+					});
+				}
+				else
+					res.view({library: userLibrary, session: req.session});
+			}
+			getData();
+			
+		});
+	},
+	
   
-
+	setLibraryStatus: function(req,res)
+	{
+		Library.updateForUser(req.session.user.id, req.param("series"), req.param("status"));
+		res.send("done");
+	},
+	
+	setProgressStatus: function(req,res)
+	{
+		Library.findOne({user: req.session.user.id, series: req.param("series")}).done(function(err, data)
+		{
+			var progress = parseInt(req.param("progress"));
+			
+			tvdb.getSeriesEpisodeInfo(req.param("series"), function(episodes)
+			{
+				if ( !err && data && data.status == "Currently Watching" && episodes.length >= progress )
+				{
+					data.progress = progress;
+					data.save(function(err)
+					{
+						// done!
+					});
+				}
+				res.send("done");
+			});
+		});
+	},
 
   /**
    * Overrides for the settings in `config/controllers.js`

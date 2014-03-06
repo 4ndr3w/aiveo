@@ -1,0 +1,100 @@
+<div class="container">
+	<% if ( library.length != 0 ) { %>
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Currently Watching</h3></div>
+
+	  <table class="table">
+		  <tr>
+			  <th>Series</th>
+			  <th>Progress</th>
+		  </tr>
+		  <% for (var i = 0; i < library.length; i++ ) 
+		  	 { 
+			    if ( library[i].status == "Currently Watching" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
+			  <td><%= library[i].progress %>/<%= library[i].totalEpisodes %></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+	</div>
+	
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Plan to Watch</h3></div>
+
+	  <table class="table">
+		  <tr>
+			  <th>Series</th>
+		  </tr>
+		  <% for (var i = 0; i < library.length; i++ ) 
+		  	 { 
+			    if ( library[i].status == "Plan to Watch" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+	</div>
+	
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Completed</h3></div>
+
+	  <table class="table">
+		  <tr>
+			  <th>Series</th>
+		  </tr>
+		  <% for (var i = 0; i < library.length; i++ ) 
+		  	 { 
+			    if ( library[i].status == "Completed" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+	</div>
+	
+	<div class="panel panel-default">
+	  <div class="panel-heading"><h3 class="panel-title">Dropped</h3></div>
+
+	  <table class="table">
+		  <tr>
+			  <th>Series</th>
+			  <th>Progress</th>
+		  </tr>
+		  <% for (var i = 0; i < library.length; i++ ) 
+		  	 { 
+			    if ( library[i].status == "Dropped" )
+				{
+		  %>
+		  <tr>
+			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
+			  <td><%= library[i].progress %>/<%= library[i].totalEpisodes %></td>
+		  </tr>
+		  <% }
+	  		 } %>
+	  </table>
+	</div>
+	<% } else { %>
+		<div class="jumbotron">
+		  <h1>Welcome!</h1>
+		  <p>To get started, search for a series to add to your library:</p>
+		  <p>
+   			 <form class="search-form" action="/series/search" method="get">
+         		<div class="input-group">
+           			<input type="search" name="query" class="form-control" placeholder="Search">
+           			<span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+         		</div>
+       		</form>
+		  </p>
+		</div>
+	<% } %>
+</div>

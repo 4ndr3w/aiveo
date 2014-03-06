@@ -15,7 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-
+var tvdb = require("../../cachedTVDB");
 
 module.exports = {
     
@@ -23,7 +23,107 @@ module.exports = {
    * Overrides for the settings in `config/controllers.js`
    * (specific to UserController)
    */
-  _config: {}
-
+  _config: {},
   
+  logout: function(req,res)
+  {
+	  req.session.user = false;
+	  res.redirect("/");
+  },
+  
+  viewuser: function(req, res)
+  {
+	  User.findOneByUsername(req.param("username"), function(err, user)
+	  {
+		  if ( !err && user )
+		  {
+			Library.findByUser(user.id).done(function (err, userLibrary)
+			{
+				var index = 0;
+				function getData()
+				{
+					if ( index < userLibrary.length )
+					{
+						tvdb.getSeriesInfo(userLibrary[index].series, function (info)
+						{
+							tvdb.getSeriesEpisodeInfo(userLibrary[index].series, function (episodes)
+							{
+								userLibrary[index].series = info;
+								userLibrary[index].totalEpisodes = episodes.length;
+								index++;
+								getData();
+							});
+						});
+					}
+					else
+						res.view({username: req.param("username"),library: userLibrary, session: req.session});
+				}
+				getData();
+		
+			});
+		}	
+		else
+			res.view('404');
+	});
+  },
+  
+  managefriends: function(req, res)
+  {
+	  User.findOneById(req.session.user.id).done(function(err,user)
+	  {
+		  if ( req.param("newfriend") )
+		  {
+			  var fail = false;
+			  for ( f in user.friends )
+			  {
+				  if ( req.param("newfriend") == user.friends[f] )
+				  {
+					  fail = true;
+				  }
+			  }
+			  
+			  if ( req.param("newfriend") == req.session.user.username )
+			  	fail = true;
+			  
+			  if ( fail )
+			  {
+				  res.view({session: req.session, friends:user.friends});
+				  return;
+			  }
+			  
+			  User.findOneByUsername(req.param("newfriend")).done(function(err, newfriend)
+			  {
+				  if ( err || newfriend == undefined )
+				  {
+				 	 res.view({session: req.session, friends:user.friends});
+					 return;
+				  }
+				  if ( user.friends == undefined )
+				  	user.friends = new Array();
+				  user.friends.push(req.param("newfriend"));
+				  user.save(function(err)
+				  {
+					  res.view({session: req.session, friends:user.friends});
+				  });
+			  });
+		  }
+		  else if ( req.param("deletefriend") )
+		  {
+			  newArray = new Array();
+			  for ( f in user.friends )
+			  {
+				  if ( req.param("deletefriend") != user.friends[f] )
+				  	newArray.push(user.friends[f]);
+			  }
+			  user.friends = newArray;
+			  user.save(function(err)
+			  {
+				  res.redirect("/friends/manage");
+			  });
+		  }
+		  else
+	  	  	res.view({session: req.session, friends:user.friends});
+	  });
+  },
+
 };

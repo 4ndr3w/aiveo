@@ -1,0 +1,26 @@
+<div class="container">
+	<div class="col-md-5 centerdiv">
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">Friends</h3>
+	  </div>
+	  <table class="table">
+		  <% for ( friend in friends) { %>
+		  <tr>
+			  <td><%= friends[friend] %></td>
+			  <td>
+				  <a class="btn btn-default btn-sm" href="/friends/manage?deletefriend=<%= friends[friend] %>">
+				    <span class="glyphicon glyphicon-remove"></span>
+				  </a>
+			  </td>
+		  </tr>
+		  <% } %>
+		  <tr>
+			  <form action="/friends/manage" method="post">
+			  <td><input type="text" name="newfriend" placeholder="New Friend"></td>
+			  <td><input type="submit" value="Add" class="btn btn-primary"></td>
+		  </tr>
+	  </table>
+	</div>
+	</div>
+</div>
