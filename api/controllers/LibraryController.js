@@ -50,17 +50,18 @@ module.exports = {
   
 	setLibraryStatus: function(req,res)
 	{
-		Library.updateForUser(req.session.user.id, req.param("series"), req.param("status"));
+
+		Library.updateForUser(req.session.user.id, parseInt(req.param("series")), req.param("status"));
 		res.send("done");
 	},
 	
 	setProgressStatus: function(req,res)
 	{
-		Library.findOne({user: req.session.user.id, series: req.param("series")}).done(function(err, data)
+		Library.findOne({user: req.session.user.id, series: parseInt(req.param("series"))}).done(function(err, data)
 		{
 			var progress = parseInt(req.param("progress"));
 			
-			tvdb.getSeriesEpisodeInfo(req.param("series"), function(episodes)
+			tvdb.getSeriesEpisodeInfo(parseInt(req.param("series")), function(episodes)
 			{
 				if ( !err && data && data.status == "Currently Watching" && episodes.length >= progress )
 				{

@@ -20,11 +20,12 @@
 			<h5>Your passwords do not match</h5>
 		<% } %>
 		<% if (noUniqueUsername) { %>
-			<h5>Please choose a unique username</h5>
+			<h5>Please check your input</h5>
 		<% } %>
 		<h3>Register</h3>
 		<form action="/welcome/create" method="post">
 			<input type="text" class="input-lg" name="username" placeholder="Username"><br><br>
+			<input type="text" class="input-lg" name="email" placeholder="Email"><br><br>
 			<input type="password" class="input-lg" name="password" placeholder="Password"><br><br>
 			<input type="password" class="input-lg" name="password2" placeholder="Confirm Password"><br><br>
 			<input type="submit" value="Register" class="btn btn-default btn-lg">

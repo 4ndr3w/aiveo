@@ -23,6 +23,11 @@ module.exports = {
   		required:true
   	},
 	
+	email: {
+		type: 'email',
+		required: true
+	},
+	
 	friends: {
 		type: 'array',
 		defaultsTo: []

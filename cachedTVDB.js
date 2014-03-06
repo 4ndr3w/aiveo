@@ -1,6 +1,6 @@
 var tvdb = require("thetvdb-api")("330AB5AC7F0792B4"),
 	memjs = require('memjs'),
-	memcache = new memjs.Client.create;
+	memcache = new memjs.Client.create();
 
 var default_poster = "no poster";
 var banners_mirror = "http://thetvdb.com/banners/";

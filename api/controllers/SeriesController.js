@@ -40,17 +40,19 @@ module.exports = {
     },
   
 	view: function(req,res) {
-		tvdb.getSeriesInfo(req.param("series"), function(series)
+		tvdb.getSeriesInfo(parseInt(req.param("series")), function(series)
 		{
-			tvdb.getSeriesEpisodeInfo(req.param("series"), function(episodes)
+			tvdb.getSeriesEpisodeInfo(parseInt(req.param("series")), function(episodes)
 			{
-				Library.findOne({user:req.session.user.id, series:req.param("series")}, function(err, entry)
+				Library.findOne({user:req.session.user.id, series:parseInt(req.param("series"))}).done(function(err, entry)
 				{
+					console.log(err);
+					console.log(entry);
 					if ( entry == undefined )
 						entry = {status: "Add to Library", progress: 0};
 					User.findOneById(req.session.user.id, function (err, loggedinUser)
 					{
-						Library.getForUsersAndSeries(req.param("series"), loggedinUser.friends, function(err, friendWatchingData)
+						Library.getForUsersAndSeries(parseInt(req.param("series")), loggedinUser.friends, function(err, friendWatchingData)
 						{
 							res.view({series: series, watchingStatus: entry.status, totalEpisodes:episodes.length, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData});
 						});

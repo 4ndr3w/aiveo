@@ -11,8 +11,12 @@ module.exports = {
 	
 	updateForUser: function(user, series, status)
 	{
+		console.log(user);
+		console.log(series);
 		Library.findOne({user: user, series: series}).done(function(e, obj)
 		{
+			console.log(e);
+			console.log(obj);
 			if ( !e && obj )
 			{
 				console.log(obj);
@@ -26,6 +30,8 @@ module.exports = {
 			{
 				Library.create({user: user, series: series, status: status}).done(function(e, obj)
 				{
+					console.log(e);
+					console.log(obj);
 					return;
 				});
 			}
@@ -130,15 +136,8 @@ module.exports = {
 	},
 	
   attributes: {
-	  id: {
-	      type: 'integer',
-	      autoIncrement: true,
-	      primaryKey: true,
-	      unique: true
-	    },	  
-	  
   	user: {
-  		type: 'integer',
+  		type: 'string',
   		required: true
   	},
   	
@@ -155,7 +154,6 @@ module.exports = {
 	
 	progress: {
 		type: 'integer',
-		required: true,
 		defaultsTo: 0
 	},
     
