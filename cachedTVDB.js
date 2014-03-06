@@ -1,6 +1,6 @@
 var tvdb = require("thetvdb-api")("330AB5AC7F0792B4"),
-	memcachelib = require('memcached'),
-	memcache = new memcachelib(process.env.MEMCACHEDCLOUD_SERVERS);
+	memjs = require('memjs'),
+	memcache = new memjs.Client.create;
 
 var default_poster = "no poster";
 var banners_mirror = "http://thetvdb.com/banners/";
@@ -33,10 +33,10 @@ function searchForSeries(name, callback)
 						}
 						else
 						{
-							memcache.set(name+"-search", JSON.stringify(results), 864000, function(err)
+							memcache.set(name+"-search", JSON.stringify(results), function(err)
 							{
 								if ( err ) console.log("Memcache set error!");
-							});
+							}, 864000);
 							callback(results.Data.Series);
 						}
 					}
@@ -61,14 +61,14 @@ function fetchAllSeriesInfo(seriesID, callback)
 		else
 		{
 			data.Data.Series.poster = banners_mirror+data.Data.Series.poster;
-			memcache.set(seriesID+"-info", JSON.stringify(data.Data.Series), 864000, function(err)
+			memcache.set(seriesID+"-info", JSON.stringify(data.Data.Series), function(err)
 			{
 				if ( err ) console.log("Memcache set error!");
-			});
-			memcache.set(seriesID+"-episodes", JSON.stringify(data.Data.Episode), 864000, function(err)
+			}, 864000);
+			memcache.set(seriesID+"-episodes", JSON.stringify(data.Data.Episode), function(err)
 			{
 				if ( err ) console.log("Memcache set error!");
-			});
+			}, 864000);
 			callback(data.Data.Series, data.Data.Episode);
 		}
 	});
@@ -142,10 +142,10 @@ function getPoster(seriesID, callback)
                 if ( highestRated != -1 )
                 {
                 	url = banners_mirror+banner.Banners.Banner[highestRated].BannerPath;
-                    memcache.set(seriesID+"-poster", url, 864000, function(err)
+                    memcache.set(seriesID+"-poster", url, function(err)
 					{
 						if ( err ) console.log("Memcache set error!");
-					});
+					}, 864000);
                     callback(url);
                 }
                 else
