@@ -40,7 +40,7 @@ module.exports = {
 					});
 				}
 				else
-					res.view({library: userLibrary, session: req.session});
+					res.view({title:"Library", library: userLibrary, session: req.session});
 			}
 			getData();
 			

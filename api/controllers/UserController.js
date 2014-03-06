@@ -56,7 +56,7 @@ module.exports = {
 						});
 					}
 					else
-						res.view({username: req.param("username"),library: userLibrary, session: req.session});
+						res.view({title:req.param("username"), username: req.param("username"),library: userLibrary, session: req.session});
 				}
 				getData();
 		
@@ -87,7 +87,7 @@ module.exports = {
 			  
 			  if ( fail )
 			  {
-				  res.view({session: req.session, friends:user.friends});
+				  res.view({title:"Friends", session: req.session, friends:user.friends});
 				  return;
 			  }
 			  
@@ -95,7 +95,7 @@ module.exports = {
 			  {
 				  if ( err || newfriend == undefined )
 				  {
-				 	 res.view({session: req.session, friends:user.friends});
+				 	 res.view({title:"Friends", session: req.session, friends:user.friends});
 					 return;
 				  }
 				  if ( user.friends == undefined )
@@ -103,7 +103,7 @@ module.exports = {
 				  user.friends.push(req.param("newfriend"));
 				  user.save(function(err)
 				  {
-					  res.view({session: req.session, friends:user.friends});
+					  res.view({title:"Friends", session: req.session, friends:user.friends});
 				  });
 			  });
 		  }
@@ -122,7 +122,7 @@ module.exports = {
 			  });
 		  }
 		  else
-	  	  	res.view({session: req.session, friends:user.friends});
+	  	  	res.view({title:"Friends", session: req.session, friends:user.friends});
 	  });
   },
 

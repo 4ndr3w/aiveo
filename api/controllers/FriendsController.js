@@ -46,7 +46,7 @@ module.exports = {
 					}
 					else
 					{
-						res.view({friends: friendsData, session: req.session});
+						res.view({title:"Friends", friends: friendsData, session: req.session});
 					}
 					
 				}

@@ -33,7 +33,7 @@ module.exports = {
 					}
 					return "Add to Library";
 				}
-				res.view({results:results, getLibraryStatus: getLibraryStatus, session: req.session});
+				res.view({title: "Search - "+req.param("query"), results:results, getLibraryStatus: getLibraryStatus, session: req.session});
 			});
     		
     	});
@@ -54,7 +54,7 @@ module.exports = {
 					{
 						Library.getForUsersAndSeries(parseInt(req.param("series")), loggedinUser.friends, function(err, friendWatchingData)
 						{
-							res.view({series: series, watchingStatus: entry.status, totalEpisodes:episodes.length, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData});
+							res.view({title:series.SeriesName, series: series, watchingStatus: entry.status, totalEpisodes:episodes.length, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData});
 						});
 					});
 				});
