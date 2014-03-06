@@ -26,7 +26,7 @@ module.exports.adapters = {
   
   mongo: {
   		module   : 'sails-mongo',
-  		url      : process.env.MONGOLAB_URI || 'mongodb://localhost/sails'
+  		url      : process.env.MONGOHQ_URL || 'mongodb://localhost/sails'
   },
 
   // MySQL is the world's most popular relational database.
