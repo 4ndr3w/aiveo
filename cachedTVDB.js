@@ -40,7 +40,10 @@ function searchForSeries(name, callback)
 							callback(results.Data.Series);
 						}
 					}
-					processPosterArt();
+					if ( results.Data.Series == undefined )
+						callback([]);
+					else
+						processPosterArt();
 				}	
 			});
 		}
