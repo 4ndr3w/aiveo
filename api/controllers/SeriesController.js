@@ -111,13 +111,11 @@ module.exports = {
 					};
 					request(getRequest, function(err, response, body)
 					{
-						console.log("Response "+response+" "+err);
-						res.end();
-						/*tvdb.cache.set(req.param("series")+"-fanart", body, function(err, data)
+						tvdb.cache.set(req.param("series")+"-fanart", body, function(err, data)
 						{
 							res.write(body, 'binary');
 							res.end();
-						}, 1000, true);*/
+						}, 1000, true);
 					});
 				});
 			}
