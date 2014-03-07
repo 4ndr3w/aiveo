@@ -91,6 +91,28 @@ module.exports = {
 		fetch();
 	},
 	
+	getUserFeed: function(friends, callback)
+	{
+		var index = 0;
+		var feed = new Array();
+		function fetch()
+		{
+			if ( index < friends.length )
+			{
+				User.findOneByUsername(friends[index]).done(function(err, data)
+				{
+					Library.find({})
+				});
+			}
+			else
+			{
+				callback(null, feed);
+			}
+		}
+		fetch();
+		
+	},
+	
 	getForUsersAndSeries: function(series, friends, callback)
 	{
 		if ( friends == undefined )

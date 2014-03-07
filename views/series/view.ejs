@@ -1,6 +1,7 @@
+<div id="imageholder" class="imageholder"></div>
 <div class="container panel panel-default">
 	<div class="col-md-3">
-    	<img src="<%= series.poster %>" class="series-big-image" alt="..."><br>
+    	<img src="/series/poster/<%= series.id %>" class="series-big-image" alt="..."><br>
 	</div>
 	<div class="col-md-9">
 		<h2 class="series-big-header"><%= series.SeriesName %></h2>	 
@@ -57,3 +58,27 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+$(window).ready(function()
+{
+	var img = new Image();
+	img.src = "/series/fanart/<%= series.id %>";
+	var options = {};
+	
+
+	img.onload = function()
+	{
+		Pixastic.process(img, "desaturate", options);
+		options.resultCanvas
+		$("body").css("background-repeat", "no-repeat");
+		$("body").css("background-attachment", "fixed");
+		$("body").css("background-size", "100%");
+		$("body").css("background-position","center");
+		$("body").css("background-image", "url('"+options.resultCanvas.toDataURL("image/png")+"')");
+		$("body").css("background-color", "black");
+	}
+	
+	
+});
+</script>

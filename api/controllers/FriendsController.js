@@ -57,6 +57,43 @@ module.exports = {
 		});
 		
 	},
+	
+	feed: function(req,res)
+	{
+		User.findOneById(req.session.user.id, function(err, currentUser)
+		{
+			Library.getUserFeed(currentUser.friends, function(err, friendsData)
+			{
+				var index = 0;
+				function process()
+				{
+					if ( index < friendsData.length )
+					{
+						var seriesID = friendsData[index].series;
+						tvdb.getSeriesInfo(seriesID, function(series)
+						{
+							tvdb.getSeriesEpisodeInfo(seriesID, function(episode)
+							{
+								friendsData[index].series = series;
+								friendsData[index].totalEpisodes = episode.length;
+								
+								index++;
+								process();
+							});
+						});
+					}
+					else
+					{
+						res.view({title:"Friends", friends: friendsData, session: req.session});
+					}
+					
+				}
+				process();
+				
+			});
+			
+		});
+	},
   
 
   /**

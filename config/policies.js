@@ -20,7 +20,11 @@ module.exports.policies = {
   
   WelcomeController: {
 	  "*": true
-  }
+  },
+  
+  SeriesController: {
+	  "imgproxy": true
+  },
   
   /*
 	// Here's an example of adding some policies to a controller

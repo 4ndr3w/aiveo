@@ -64,6 +64,7 @@ function fetchAllSeriesInfo(seriesID, callback)
 		else
 		{
 			data.Data.Series.poster = banners_mirror+data.Data.Series.poster;
+			data.Data.Series.fanart = banners_mirror+data.Data.Series.fanart;
 			memcache.set(seriesID+"-info", JSON.stringify(data.Data.Series), function(err)
 			{
 				if ( err ) console.log("Memcache set error!");
@@ -174,5 +175,6 @@ exports.searchForSeries = searchForSeries;
 exports.getSeriesInfo = getSeriesInfo;
 exports.getSeriesEpisodeInfo = getSeriesEpisodeInfo;
 exports.getPoster = getPoster;
+exports.cache = memcache;
 
 

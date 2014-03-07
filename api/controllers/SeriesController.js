@@ -15,10 +15,12 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var tvdb = require("../../cachedTVDB");
+var tvdb = require("../../cachedTVDB"),
+	request = require("request");
 
 module.exports = {
-    
+	
+	
     search: function(req,res) {
     	var results = tvdb.searchForSeries(req.param("query"), function(results)
     	{
@@ -46,8 +48,6 @@ module.exports = {
 			{
 				Library.findOne({user:req.session.user.id, series:parseInt(req.param("series"))}).done(function(err, entry)
 				{
-					console.log(err);
-					console.log(entry);
 					if ( entry == undefined )
 						entry = {status: "Add to Library", progress: 0};
 					User.findOneById(req.session.user.id, function (err, loggedinUser)
@@ -60,6 +60,71 @@ module.exports = {
 				});
 			});
 		});
+	},
+	
+	poster: function(req,res)
+	{
+		res.set("content-type", "image/png");
+		tvdb.cache.get(req.param("series")+"-poster", function(err, data)
+		{
+			if (err || !data )
+			{
+				tvdb.getSeriesInfo(parseInt(req.param("series")), function(series)
+				{
+					var getRequest = {
+						method: "GET",
+						url: series.poster,
+						encoding: null
+					};
+					request(getRequest, function(err, response, body)
+					{
+						tvdb.cache.set(req.param("series")+"-poster", body, function(err, data)
+						{
+							res.write(body, 'binary');
+							res.end();
+						}, 1000, true);
+					})
+				});
+			}
+			else
+			{
+				res.write(data, 'binary');
+				res.end();
+			}
+		});	
+	},
+	
+	fanart: function(req,res)
+	{
+		res.set("content-type", "image/png");
+		tvdb.cache.get(req.param("series")+"-fanart", function(err, data)
+		{
+			if (err || !data )
+			{
+				tvdb.getSeriesInfo(parseInt(req.param("series")), function(series)
+				{
+					
+					var getRequest = {
+						method: "GET",
+						url: series.fanart,
+						encoding: null
+					};
+					request(getRequest, function(err, response, body)
+					{
+						tvdb.cache.set(req.param("series")+"-fanart", body, function(err, data)
+						{
+							res.write(body, 'binary');
+							res.end();
+						}, 1000, true);
+					});
+				});
+			}
+			else
+			{
+				res.write(data, 'binary');
+				res.end();
+			}
+		});	
 	},
 
   /**
