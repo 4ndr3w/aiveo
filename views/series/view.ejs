@@ -13,7 +13,9 @@
 				<ul class="dropdown-menu" role="menu">
 	  				<li><a href="#" onClick="planToWatchSeries(<%= series.id %>)">Plan to Watch</a></li>
 	  				<li><a href="#" onClick="currentlyWatchingSeries(<%= series.id %>)">Currently Watching</a></li>
+					<% if ( series.Status != "Continuing" ) { %>
 					<li><a href="#" onClick="completeSeries(<%= series.id %>)">Completed</a></li>
+					<% } %>
 					<li><a href="#" onClick="dropSeries(<%= series.id %>)">Dropped</a></li>
 				</ul>
 			</div>
