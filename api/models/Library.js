@@ -11,15 +11,10 @@ module.exports = {
 	
 	updateForUser: function(user, series, status)
 	{
-		console.log(user);
-		console.log(series);
 		Library.findOne({user: user, series: series}).done(function(e, obj)
 		{
-			console.log(e);
-			console.log(obj);
 			if ( !e && obj )
 			{
-				console.log(obj);
 				obj.status = status;
 				obj.save(function(err)
 				{
@@ -30,8 +25,6 @@ module.exports = {
 			{
 				Library.create({user: user, series: series, status: status}).done(function(e, obj)
 				{
-					console.log(e);
-					console.log(obj);
 					return;
 				});
 			}
