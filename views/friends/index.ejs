@@ -1,41 +1,20 @@
 <div class="container">
 	<h3>What your friends are watching:</h3>
-	<br>
-	<div class="panel panel-default">
-	  <div class="panel-heading"><h3 class="panel-title">Currently Watching</h3></div>
 
-	  <table class="table">
-		  <% for ( f in friends ) 
-		  	 { 
-			    if ( friends[f].status == "Currently Watching" )
-				{
-		  %>
-		  <tr>
-			  <td><a href="/user/<%= friends[f].username %>"><%= friends[f].username %></a></td>
-			  <td><span class="pull-right"><a href="/series/view?series=<%= friends[f].series.id %>"><%= friends[f].series.SeriesName %></a> <%= friends[f].progress %>/<%= friends[f].totalEpisodes %></span></td>
-		  </tr>
-		  <% }
-	  		 } %>
-	  </table>
-	</div>
+	<% for ( var i = 0; i < friends.length; i++ ) { %>
+	<div class="media">
+  	<a class="pull-left" href="#">
+    <img class="media-object smallimage" src="/series/poster/<%= friends[i].series.id %>" alt="...">
+  </a>
+  <div class="media-body overflow-visible">
+    <h4 class="media-heading">
+		<a href="/user/<%= friends[i].username %>"><%= friends[i].username %></a>
+		<% if ( friends[i].status == "Currently Watching") { %> watched an episode of <% }
+		else {  %><%= friends[i].status %> <% } %>
+		<a href="/series/view?series=<%= friends[i].series.id %>"><%= friends[i].series.SeriesName %></a></h4>
+   	<%= friends[i].series.Overview %>
+   	</div>
+  </div>
+  <% } %>
 
-	<div class="panel panel-default">
-	  <div class="panel-heading"><h3 class="panel-title">Plan to Watch</h3></div>
-
-	  <table class="table">
-		  <% for ( f in friends ) 
-		  	 { 
-			    if ( friends[f].status == "Plan to Watch" )
-				{
-		  %>
-		  <tr>
-			  <td><a href="/user/<%= friends[f].username %>"><%= friends[f].username %></a></td>
-			  <td><span class="pull-right"><a href="/series/view?series=<%= friends[f].series.id %>"><%= friends[f].series.SeriesName %></a></span></td>
-		  </tr>
-		  <% }
-	  		 } %>
-	  </table>
-
-	</div>
-  <a href="/friends/manage">Manage Friends</a>
 </div>

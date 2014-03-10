@@ -94,7 +94,17 @@ module.exports = {
 			{
 				User.findOneByUsername(friends[index]).done(function(err, data)
 				{
-					Library.find({})
+					Library.find({user:data.id}).sort("updatedAt").limit(10).done(function(err, userlib)
+					{
+						for ( var i = 0; i < userlib.length; i++ )
+						{
+							userlib[i].username = friends[index];
+						}
+						if ( !err && userlib )
+							feed = feed.concat(userlib);
+						index++;
+						fetch();
+					});
 				});
 			}
 			else

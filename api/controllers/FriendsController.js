@@ -19,7 +19,7 @@ var tvdb = require("../../cachedTVDB");
 
 module.exports = {
     
-	index: function (req,res)
+	all: function (req,res)
 	{
 		
 		User.findOneById(req.session.user.id, function(err, currentUser)
@@ -58,7 +58,7 @@ module.exports = {
 		
 	},
 	
-	feed: function(req,res)
+	index: function(req,res)
 	{
 		User.findOneById(req.session.user.id, function(err, currentUser)
 		{
@@ -84,9 +84,9 @@ module.exports = {
 					}
 					else
 					{
+						console.log(friendsData);
 						res.view({title:"Friends", friends: friendsData, session: req.session});
 					}
-					
 				}
 				process();
 				
