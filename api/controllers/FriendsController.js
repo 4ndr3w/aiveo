@@ -84,7 +84,6 @@ module.exports = {
 					}
 					else
 					{
-						console.log(friendsData);
 						res.view({title:"Friends", friends: friendsData, session: req.session});
 					}
 				}
