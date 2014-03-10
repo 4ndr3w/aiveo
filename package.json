@@ -11,7 +11,7 @@
         "optimist": "0.3.4",
 		"thetvdb-api": "*",
 		"bcrypt": "*",
-		"memjs": "git+https://github.com/4ndr3w/memjs.git",
+		"memjs": ">=0.8.4",
 		"sails-mongo": "*",
 		"request": "*"
     },
