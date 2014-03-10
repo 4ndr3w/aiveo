@@ -13,8 +13,7 @@
 		"bcrypt": "*",
 		"memjs": ">=0.8.4",
 		"sails-mongo": "*",
-		"request": "*",
-		"resize": "*"
+		"request": "*"
     },
     "scripts": {
         "start": "node app.js",

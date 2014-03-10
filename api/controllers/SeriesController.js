@@ -16,8 +16,7 @@
  */
 
 var tvdb = require("../../cachedTVDB"),
-	request = require("request"),
-	resize = require("resize");
+	request = require("request");
 
 module.exports = {
 	
@@ -79,15 +78,11 @@ module.exports = {
 					};
 					request(getRequest, function(err, response, body)
 					{
-						resize(body, 294, 200, function(err, img)
+						tvdb.cache.set(req.param("series")+"-poster", body, function(err, data)
 						{
-							tvdb.cache.set(req.param("series")+"-poster", img, function(err, data)
-							{
-								res.write(img, 'binary');
-								res.end();
-							}, 1000, true);
-						})
-
+							res.write(body, 'binary');
+							res.end();
+						}, 1000, true);
 					})
 				});
 			}
