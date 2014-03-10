@@ -23,6 +23,20 @@ function dropSeries(id)
 	$.get("/library/setLibraryStatus?series="+id+"&status=Dropped");
 }
 
+function setProgress(id, progress)
+{
+	total = parseInt($("#watchingProgressBar").attr("total-episodes"));
+	completed = parseInt($("#watchingProgressBar").attr("completed-episodes"));
+	console.log(completed<total);
+	if ( progress < total )
+		completed = progress;
+	$("#watchingProgressBar").attr("completed-episodes", completed);
+	$("#watchingProgressBar").css("width", Math.floor(completed/total*100)+"%");
+	$("#watchingProgressBar").text(completed+"/"+total);
+	
+	$.get("/library/setProgressStatus?series="+id+"&progress="+completed);
+}
+
 $("#completedEpisodeButton").click(function()
 {
 	id = $(this).attr("series-id");

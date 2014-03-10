@@ -54,7 +54,7 @@ module.exports = {
 					{
 						Library.getForUsersAndSeries(parseInt(req.param("series")), loggedinUser.friends, function(err, friendWatchingData)
 						{
-							res.view({title:series.SeriesName, series: series, watchingStatus: entry.status, totalEpisodes:episodes.length, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData});
+							res.view({title:series.SeriesName, series: series, episodes: episodes, watchingStatus: entry.status, totalEpisodes:episodes.length, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData});
 						});
 					});
 				});

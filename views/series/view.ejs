@@ -1,5 +1,36 @@
+
+<% var last_season = 0; %>
+<div class="modal fade" id="selectLastViewed" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Select the last episode you watched:</h4>
+      </div>
+      <div class="modal-body">
+		  <div class="panel panel-default">
+			<% for ( var i = 0; i < episodes.length; i++ ) { %>
+				<% if ( last_season != episodes[i].SeasonNumber ) { %>
+					<% if ( last_season != 0 ) { %></div><% } %>
+					<div class="panel-heading"><h3 class="panel-title">Season <%= episodes[i].SeasonNumber %></h3></div>
+					<div class="list-group">
+				<% } %>
+					<a href="#" onClick="setProgress(<%= series.id %>, <%= i+1 %>)" data-dismiss="modal" class="list-group-item"><%= episodes[i].EpisodeName %></a>
+				<% last_season = episodes[i].SeasonNumber %>
+			<% } %>
+			</div>
+			</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="imageholder" class="imageholder"></div>
 <div class="container panel panel-default">
+	
 	<div class="col-md-3">
     	<img src="/series/poster/<%= series.id %>" class="series-big-image" alt="..."><br>
 	</div>
@@ -13,7 +44,7 @@
 				</button>
 				<ul class="dropdown-menu" role="menu">
 	  				<li><a href="#" onClick="planToWatchSeries(<%= series.id %>)">Plan to Watch</a></li>
-	  				<li><a href="#" onClick="currentlyWatchingSeries(<%= series.id %>)">Currently Watching</a></li>
+	  				<li><a href="#" onClick="currentlyWatchingSeries(<%= series.id %>)" data-toggle="modal" data-target="#selectLastViewed">Currently Watching</a></li>
 					<% if ( series.Status != "Continuing" ) { %>
 					<li><a href="#" onClick="completeSeries(<%= series.id %>)">Completed</a></li>
 					<% } %>
