@@ -12,8 +12,8 @@
 			<% for ( var i = 0; i < episodes.length; i++ ) { %>
 				<% if ( last_season != episodes[i].SeasonNumber ) { %>
 					<% if ( last_season != 0 ) { %></div><% } %>
-					<div class="panel-heading"><h3 class="panel-title">Season <%= episodes[i].SeasonNumber %></h3></div>
-					<div class="list-group">
+					<div class="panel-heading" data-toggle="collapse" data-target="#season<%= episodes[i].SeasonNumber %>"><h3 class="panel-title">Season <%= episodes[i].SeasonNumber %></h3></div>
+					<div class="list-group collapse" id="season<%= episodes[i].SeasonNumber %>">
 				<% } %>
 					<a href="#" onClick="setProgress(<%= series.id %>, <%= i+1 %>)" data-dismiss="modal" class="list-group-item"><%= episodes[i].EpisodeName %></a>
 				<% last_season = episodes[i].SeasonNumber %>

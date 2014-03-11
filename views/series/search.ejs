@@ -6,19 +6,15 @@
     <img class="media-object smallimage" src="/series/poster/<%= results[i].id %>" alt="...">
   </a>
   <div class="media-body overflow-visible">
+	  <%
+	  var status = getLibraryStatus(results[i].id); 
+	  if (status != "Add to Library") { %>
   	<div class="pull-right btn-group">
-    	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-    		<span id="series<%= results[i].id %>status"><%= getLibraryStatus(results[i].id) %></span> <span class="caret"></span>
+    	<button type="button" class="btn btn-default disabled">
+    		<span id="series<%= results[i].id %>status"><%= status %></span>
  		</button>
-  		<ul class="dropdown-menu" role="menu">
-    		<li><a href="#" onClick="planToWatchSeries(<%= results[i].id %>)">Plan to Watch</a></li>
-    		<li><a href="#" onClick="currentlyWatchingSeries(<%= results[i].id %>)">Currently Watching</a></li>
-			<% if ( results[i].Status != "Continuing" ) { %>
-			<li><a href="#" onClick="completeSeries(<%= results[i].id %>)">Completed</a></li>
-			<% } %>
-			<li><a href="#" onClick="dropSeries(<%= results[i].id %>)">Dropped</a></li>
-  		</ul>
   	</div>
+	<% } %>
     <h4 class="media-heading"><a href="/series/view?series=<%= results[i].id %>"><%= results[i].SeriesName %></a></h4>
    	<%= results[i].Overview %>
    	</div>
