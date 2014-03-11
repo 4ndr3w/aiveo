@@ -103,13 +103,15 @@ $(window).ready(function()
 
 	img.onload = function()
 	{
-		Pixastic.process(img, "desaturate", options);
-		$("body").css("background-repeat", "no-repeat");
-		$("body").css("background-attachment", "fixed");
-		$("body").css("background-size", "cover");
-		$("body").css("background-position","center");
-		$("body").css("background-image", "url('"+options.resultCanvas.toDataURL("image/png")+"')");
-		$("body").css("background-color", "black");
+		Pixastic.process(img, "desaturate", options, function()
+		{
+			$("body").css("background-repeat", "no-repeat");
+			$("body").css("background-attachment", "fixed");
+			$("body").css("background-size", "cover");
+			$("body").css("background-position","center");
+			$("body").css("background-image", "url('"+options.resultCanvas.toDataURL("image/png")+"')");
+			$("body").css("background-color", "black");
+		});
 	}
 	
 	
