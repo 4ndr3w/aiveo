@@ -42,8 +42,7 @@ $("#completedEpisodeButton").click(function()
 	id = $(this).attr("series-id");
 	total = parseInt($("#watchingProgressBar").attr("total-episodes"));
 	completed = parseInt($("#watchingProgressBar").attr("completed-episodes"));
-	console.log(completed<total);
-	if ( completed < total )
+	if ( completed <= total )
 		completed++;
 	$("#watchingProgressBar").attr("completed-episodes", completed);
 	$("#watchingProgressBar").css("width", Math.floor(completed/total*100)+"%");
