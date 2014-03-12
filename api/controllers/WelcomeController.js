@@ -67,6 +67,8 @@ module.exports = {
 	{
 		res.view({layout:"", noPasswordMatch: false, noUniqueUsername: false});
 	},
+  
+  
 
   /**
    * Overrides for the settings in `config/controllers.js`

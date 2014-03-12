@@ -54,8 +54,6 @@ module.exports = {
 		var index = 0;
 		function fetch()
 		{
-			
-			console.log(data);
 			if ( index < friends.length )
 			{
 				User.findOneByUsername(friends[index], function (err, user)

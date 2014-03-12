@@ -21,7 +21,7 @@ module.exports = {
     
 	index: function(req,res)
 	{
-		Library.findByUser(req.session.user.id).done(function (err, userLibrary)
+		Library.findByUser(req.session.user.id).sort("updatedAt desc").done(function (err, userLibrary)
 		{
 			var index = 0;
 			function getData()

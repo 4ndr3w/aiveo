@@ -59,6 +59,15 @@ body
 	width: 180px;
 }
 
+#recent {
+  background-image: url("/images/tweed.png");
+}
+
+#recent img {
+  width:25%;
+  margin-right: -4px;
+}
+
 .centerdiv
 {
 	margin:auto;

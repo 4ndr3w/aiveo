@@ -1,8 +1,27 @@
 <div class="container">
 	<% if ( library.length != 0 ) { %>
+
+    
 	<div class="panel panel-default">
 	  <div class="panel-heading"><h3 class="panel-title">Currently Watching</h3></div>
-
+    
+    <div id="recent">
+      <%
+      var i = 0; 
+      for (i = 0; i < library.length && i < 4; i++ ) { %>
+          <img class="recent-thumbnail" src="/series/poster/<%= library[i].series.id %>"></img>
+      <% 
+      }
+      var n = 4-i;
+      for (var spacers = 0; n < spacers; spacers++ )
+      {
+      %>
+        <div class="recent-thumbnail"></div>
+      <%
+      }
+      %>
+    </div>
+    
 	  <table class="table">
 		  <tr>
 			  <th>Series</th>
