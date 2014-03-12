@@ -27,14 +27,22 @@ function setProgress(id, progress)
 {
 	total = parseInt($("#watchingProgressBar").attr("total-episodes"));
 	completed = parseInt($("#watchingProgressBar").attr("completed-episodes"));
-	console.log(completed<total);
-	if ( progress < total )
+	if ( progress <= total )
 		completed = progress;
 	$("#watchingProgressBar").attr("completed-episodes", completed);
 	$("#watchingProgressBar").css("width", Math.floor(completed/total*100)+"%");
 	$("#watchingProgressBar").text(completed+"/"+total);
 	
-	$.get("/library/setProgressStatus?series="+id+"&progress="+completed);
+  $.ajax({
+    url: "/library/setLibraryStatus?series="+id+"&status=Currently Watching",
+    success: function()
+    {
+      console.log("success "+id+" "+completed);
+      $.get("/library/setProgressStatus?series="+id+"&progress="+completed);
+    }
+  });
+  $("#progressBarContainer").removeClass("hide");
+	
 }
 
 $("#completedEpisodeButton").click(function()

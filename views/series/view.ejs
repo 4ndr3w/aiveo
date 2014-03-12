@@ -44,7 +44,7 @@
 				</button>
 				<ul class="dropdown-menu" role="menu">
 	  				<li><a href="#" onClick="planToWatchSeries(<%= series.id %>)">Plan to Watch</a></li>
-	  				<li><a href="#" onClick="currentlyWatchingSeries(<%= series.id %>)" data-toggle="modal" data-target="#selectLastViewed">Currently Watching</a></li>
+	  				<li><a href="#" data-toggle="modal" data-target="#selectLastViewed">Currently Watching</a></li>
 					<% if ( series.Status != "Continuing" ) { %>
 					<li><a href="#" onClick="completeSeries(<%= series.id %>)">Completed</a></li>
 					<% } %>
@@ -52,8 +52,7 @@
 				</ul>
 			</div>
 		</div>	
-		<% if ( watchingStatus == "Currently Watching" ) { %>
-			<div class="container-fluid">
+			<div id="progressBarContainer" class="container-fluid <% if ( watchingStatus != "Currently Watching" ) { %>hide<% } %>">
 				<div class="col-md-11">
 					<div class="progress">
 			  	  	  <div class="progress-bar" id="watchingProgressBar" completed-episodes="<%= completedEpisodes %>" total-episodes="<%= totalEpisodes %>" role="progressbar" style="width: <%= (completedEpisodes / totalEpisodes)*100 %>%;">
@@ -63,7 +62,7 @@
 				</div>
 				<div class="col-md-1"><button id="completedEpisodeButton" series-id="<%= series.id %>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span></button></div>
 			</div>
-		<% } %>
+
 		<div class="panel panel-default">
 	  	 	<div class="panel-heading">
 	    	  <h3 class="panel-title">Overview</h3>

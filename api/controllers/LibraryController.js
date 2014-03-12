@@ -63,8 +63,9 @@ module.exports = {
 			
 			tvdb.getSeriesEpisodeInfo(parseInt(req.param("series")), function(episodes)
 			{
-				if ( !err && data && data.status == "Currently Watching" && episodes.length >= progress )
+				if ( !err && data && episodes.length >= progress )
 				{
+          data.status == "Currently Watching";
 					data.progress = progress;
 					data.save(function(err)
 					{
