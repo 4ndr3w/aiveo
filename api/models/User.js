@@ -37,7 +37,7 @@ module.exports = {
 	{
 		bcrypt.compare(password, this.password, cb);
 	},
-  	
+  
   	getSeries: function (callback) {
   		WatchingStatus.findByUser(this.id, function(err, data)
   		{

@@ -73,3 +73,7 @@ body
 	margin:auto;
 	float: none;
 }
+
+.fill-width {
+  width: 100%;
+}

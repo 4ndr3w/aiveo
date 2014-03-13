@@ -15,8 +15,9 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var tvdb = require("../../cachedTVDB");
-
+var tvdb = require("../../cachedTVDB"),
+    bcrypt = require("bcrypt");
+    
 module.exports = {
     
   /**
@@ -125,5 +126,35 @@ module.exports = {
 	  	  	res.view({title:"Friends", session: req.session, friends:user.friends});
 	  });
   },
+  
+  changepassword: function(req,res)
+  {
+    if ( req.param("changepassword") && req.param("oldpassword") && req.param("newpassword") && req.param("newpassword") == req.param("newpassword2") )
+    {
+      User.findOneById(req.session.user.id).done(function(err, user)
+      {
+        user.validate(req.param("oldpassword"), function (err, valid)
+        {
+          if ( valid )
+          {
+            bcrypt.hash(req.param("newpassword"), bcrypt.genSaltSync(10), function(err, hash)
+            {
+              user.password = hash;
+              user.save(function(err)
+              {
+                res.redirect("/");
+              });
+            });
+          }
+          else
+            res.view({title: "Change Password"});
+        });
+        
+        
+      });
+    }
+    else
+      res.view({title: "Change Password"});
+    }
 
 };
