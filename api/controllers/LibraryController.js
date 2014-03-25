@@ -65,7 +65,7 @@ module.exports = {
 			{
 				if ( !err && data && episodes.length >= progress )
 				{
-          data.status == "Currently Watching";
+          data.status = "Currently Watching";
 					data.progress = progress;
 					data.save(function(err)
 					{

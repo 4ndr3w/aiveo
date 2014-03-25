@@ -172,7 +172,7 @@ module.exports = {
     status: {
     	type: 'string',
     	required: true,
-		in: ["Plan to Watch", "Currently Watching", "Completed", "Dropped"]
+		  in: ["Plan to Watch", "Currently Watching", "Completed", "Dropped"]
     },
 	
 	progress: {

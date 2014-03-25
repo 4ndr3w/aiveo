@@ -95,6 +95,7 @@ function getSeriesInfo(seriesID, callback)
 		{
 			fetchAllSeriesInfo(seriesID, function(info, episodes)
 			{
+        info.episodes = episodes;
 				callback(info);
 			});
 		}

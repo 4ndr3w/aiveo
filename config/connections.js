@@ -30,6 +30,10 @@ module.exports.connections = {
   		module   : 'sails-mongo',
   		url      : process.env.MONGOHQ_URL || 'mongodb://localhost/sails'
   },
+  
+  tvdb: {
+    module: "tvdb"
+  },
 
   // MySQL is the world's most popular relational database.
   // Learn more: http://en.wikipedia.org/wiki/MySQL
