@@ -24,7 +24,7 @@ module.exports = {
     search: function(req,res) {
     	var results = tvdb.searchForSeries(req.param("query"), function(results)
     	{
-    		Library.findByUser(req.session.user.id, function(err, userLibrary)
+    		Library.find({user:req.session.user.id}, function(err, userLibrary)
 			{
 				function getLibraryStatus(seriesID)
 				{
