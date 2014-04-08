@@ -42,10 +42,9 @@ module.exports = {
     },
   
 	view: function(req,res) {
-		tvdb.getSeriesInfo(parseInt(req.param("series")), function(series)
+		Series.find({id:parseInt(req.param("series"))}).done(function(err, series)
 		{
-			tvdb.getSeriesEpisodeInfo(parseInt(req.param("series")), function(episodes)
-			{
+        series = series[0];
 				Library.findOne({user:req.session.user.id, series:parseInt(req.param("series"))}).done(function(err, entry)
 				{
 					if ( entry == undefined )
@@ -54,11 +53,13 @@ module.exports = {
 					{
 						Library.getForUsersAndSeries(parseInt(req.param("series")), loggedinUser.friends, function(err, friendWatchingData)
 						{
-							res.view({title:series.SeriesName, series: series, episodes: episodes, watchingStatus: entry.status, totalEpisodes:episodes.length, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData});
+              Review.find({series:parseInt(req.param("series"))}).limit(4).done(function(err, reviews)
+              {
+  							res.view({title:series.SeriesName, series: series, watchingStatus: entry.status, totalEpisodes:series.totalEpisodes, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData, reviews: reviews});
+              });
 						});
 					});
 				});
-			});
 		});
 	},
 	
@@ -69,8 +70,9 @@ module.exports = {
 		{
 			if (err || !data )
 			{
-				tvdb.getSeriesInfo(parseInt(req.param("series")), function(series)
-				{
+        Series.find({id:parseInt(req.param("series"))}).done(function(err, series)
+        {
+          series = series[0];
 					var getRequest = {
 						method: "GET",
 						url: series.poster,
@@ -84,7 +86,7 @@ module.exports = {
 							res.end();
 						}, 1000, true);
 					})
-				});
+        });
 			}
 			else
 			{
@@ -101,9 +103,9 @@ module.exports = {
 		{
 			if (err || !data )
 			{
-				tvdb.getSeriesInfo(parseInt(req.param("series")), function(series)
-				{
-					
+				Series.find({id:parseInt(req.param("series"))}).done(function(err, series)
+        {
+          series = series[0];
 					var getRequest = {
 						method: "GET",
 						url: series.fanart,

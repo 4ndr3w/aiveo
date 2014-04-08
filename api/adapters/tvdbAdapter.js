@@ -151,10 +151,28 @@ module.exports = (function () {
       }
       else if ( options.where.id != undefined )
       {
-        tvdbAPI.getSeriesInfo(parseInt(options.where.id), function(data)
+        if ( options.where.id.length == undefined )
+          options.where.id = [options.where.id];
+        var index = 0;
+        var result = new Array();
+        function process()
         {
-          cb(null, data);
-        })
+          if ( options.where.id.length > index )
+          {
+            tvdbAPI.getSeriesInfo(parseInt(options.where.id[index]), function(data)
+            {
+              result.push(data);
+              index++;
+              process();
+            });
+          }
+          else
+          {
+            cb(null, result);
+          }
+        }
+        process();
+
       }
       else
 			  return cb("This data is unavailable", []);

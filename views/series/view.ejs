@@ -9,14 +9,14 @@
       </div>
       <div class="modal-body">
 		  <div class="panel panel-default">
-			<% for ( var i = 0; i < episodes.length; i++ ) { %>
-				<% if ( last_season != episodes[i].SeasonNumber ) { %>
+			<% for ( var i = 0; i < series.episodes.length; i++ ) { %>
+				<% if ( last_season != series.episodes[i].SeasonNumber ) { %>
 					<% if ( last_season != 0 ) { %></div><% } %>
-					<div class="panel-heading" data-toggle="collapse" data-target="#season<%= episodes[i].SeasonNumber %>"><h3 class="panel-title">Season <%= episodes[i].SeasonNumber %></h3></div>
-					<div class="list-group collapse" id="season<%= episodes[i].SeasonNumber %>">
+					<div class="panel-heading" data-toggle="collapse" data-target="#season<%= series.episodes[i].SeasonNumber %>"><h3 class="panel-title">Season <%= series.episodes[i].SeasonNumber %></h3></div>
+					<div class="list-group collapse" id="season<%= series.episodes[i].SeasonNumber %>">
 				<% } %>
-					<a href="#" onClick="setProgress(<%= series.id %>, <%= i+1 %>)" data-dismiss="modal" class="list-group-item"><%= episodes[i].EpisodeName %></a>
-				<% last_season = episodes[i].SeasonNumber %>
+					<a href="#" onClick="setProgress(<%= series.id %>, <%= i+1 %>)" data-dismiss="modal" class="list-group-item"><%= series.episodes[i].EpisodeName %></a>
+				<% last_season = series.episodes[i].SeasonNumber %>
 			<% } %>
 			</div>
 			</div>
@@ -66,10 +66,10 @@
       <% if ( watchingStatus == "Currently Watching" ) { %>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Last Watched: <strong><%= episodes[completedEpisodes-1].EpisodeName %></strong></h3>
+          <h3 class="panel-title">Last Watched: <strong><%= series.episodes[completedEpisodes-1].EpisodeName %></strong></h3>
         </div>
         <div class="panel-body">
-          <%= episodes[completedEpisodes-1].Overview %>
+          <%= series.episodes[completedEpisodes-1].Overview %>
         </div>
       </div>
       <% } %>
@@ -82,6 +82,28 @@
 	    		<%= series.Overview %>
 	    	</div>
 		</div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+       
+        <a href="/review/series/<%= series.id %>"><h3 class="panel-title">Reviews</h3></a>
+        
+      </div>
+      <div class="list-group">
+        <% _.each(reviews, function(r) { %>
+          <a href="/review/view/<%= r.id %>" class="list-group-item">
+            <h4 class="list-group-item-heading"><%= r.title %></h4>
+            <p class="list-group-item-text"><%= _.first(r.body.split(" "), 50).join(" ") %></p>
+          </a>
+        <% }); %>
+        <a href="/review/new/<%= series.id %>" class="list-group-item">
+          <h4 class="list-group-item-heading btn btn-default">Write a review</h4>
+          <p class="list-group-item-text"></p>
+        </a>
+        
+      </div>
+    </div>
+
 
 		<% if ( friends.length != 0 ) { %>
 		<div class="panel panel-default">

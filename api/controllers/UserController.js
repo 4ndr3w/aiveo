@@ -38,34 +38,14 @@ module.exports = {
 	  {
 		  if ( !err && user )
 		  {
-			Library.findByUser(user.id).done(function (err, userLibrary)
-			{
-				var index = 0;
-				function getData()
-				{
-					if ( index < userLibrary.length )
-					{
-						tvdb.getSeriesInfo(userLibrary[index].series, function (info)
-						{
-							tvdb.getSeriesEpisodeInfo(userLibrary[index].series, function (episodes)
-							{
-								userLibrary[index].series = info;
-								userLibrary[index].totalEpisodes = episodes.length;
-								index++;
-								getData();
-							});
-						});
-					}
-					else
-						res.view({title:req.param("username"), username: req.param("username"),library: userLibrary, session: req.session});
-				}
-				getData();
-		
-			});
-		}	
-		else
-			res.view('404');
-	});
+			  Library.findByUser(user.id).populate("series").done(function (err, userLibrary)
+			  {
+          res.view({title:req.param("username"), username: req.param("username"),library: userLibrary, session: req.session});		
+			  });
+      }	
+		  else
+			  res.view('404');
+	  });
   },
   
   managefriends: function(req, res)

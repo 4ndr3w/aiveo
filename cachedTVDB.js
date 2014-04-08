@@ -65,24 +65,22 @@ function fetchAllSeriesInfo(seriesID, callback)
 		{
 			data.Data.Series.poster = banners_mirror+data.Data.Series.poster;
 			data.Data.Series.fanart = banners_mirror+data.Data.Series.fanart;
-			memcache.set(seriesID+"-info", JSON.stringify(data.Data.Series), function(err)
-			{
-				if ( err ) console.log("Memcache set error!");
-			}, 864000);
-
 			var episodes = new Array();
-
 			for ( ep in data.Data.Episode )
 			{
 				if ( data.Data.Episode[ep].SeasonNumber != 0 )
 					episodes.push(data.Data.Episode[ep]);
 			}
-
-			memcache.set(seriesID+"-episodes", JSON.stringify(episodes), function(err)
+      
+      data.Data.Series.episodes = episodes;
+      data.Data.Series.totalEpisodes = episodes.length;
+			memcache.set(seriesID+"-info", JSON.stringify(data.Data.Series), function(err)
 			{
 				if ( err ) console.log("Memcache set error!");
 			}, 864000);
-			callback(data.Data.Series, episodes);
+
+
+			callback(data.Data.Series);
 		}
 	});
 }
@@ -93,9 +91,8 @@ function getSeriesInfo(seriesID, callback)
 	{
 		if ( err || !result )
 		{
-			fetchAllSeriesInfo(seriesID, function(info, episodes)
+			fetchAllSeriesInfo(seriesID, function(info)
 			{
-        info.episodes = episodes;
 				callback(info);
 			});
 		}

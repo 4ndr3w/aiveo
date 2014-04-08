@@ -16,14 +16,15 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access) 
-  '*': 'isAuthenticated',
+  '*': ['alertbox', 'isAuthenticated'],
   
   WelcomeController: {
 	  "*": true
   },
   
   SeriesController: {
-	  "imgproxy": true
+	  "imgproxy": true,
+    
   },
   
   /*

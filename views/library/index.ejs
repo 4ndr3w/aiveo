@@ -34,7 +34,7 @@
 		  %>
 		  <tr>
 			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
-			  <td><%= library[i].progress %>/<%= library[i].totalEpisodes %></td>
+			  <td><%= library[i].progress %>/<%= library[i].series.totalEpisodes %></td>
 		  </tr>
 		  <% }
 	  		 } %>
@@ -96,7 +96,7 @@
 		  %>
 		  <tr>
 			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
-			  <td><%= library[i].progress %>/<%= library[i].totalEpisodes %></td>
+			  <td><%= library[i].progress %>/<%= library[i].series.totalEpisodes %></td>
 		  </tr>
 		  <% }
 	  		 } %>

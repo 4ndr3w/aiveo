@@ -43,6 +43,10 @@
   		</div>
 	</nav>
 	<br>
+  <% if ( alertbox != undefined) { %>
+    <div class="alert alert-warning">...</div>
+  <% } %>
+  
     <%- body %>
 	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/js/aiveo.js"></script>

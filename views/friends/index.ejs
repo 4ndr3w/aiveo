@@ -8,7 +8,7 @@
   </a>
   <div class="media-body overflow-visible">
     <h4 class="media-heading">
-		<a href="/user/<%= friends[i].username %>"><%= friends[i].username %></a>
+		<a href="/user/<%= friends[i].username %>"><%= friends[i].user.username %></a>
 		<% if ( friends[i].status == "Currently Watching") { %> watched an episode of <% }
 		else {  %><%= friends[i].status %> <% } %>
 		<a href="/series/view?series=<%= friends[i].series.id %>"><%= friends[i].series.SeriesName %></a></h4>
