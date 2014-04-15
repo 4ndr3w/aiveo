@@ -7,6 +7,14 @@
 
 module.exports = {
   
+  index: function(req,res)
+  {
+    User.findOne({user:req.session.user.id}).populate("reviews").done(function(err, user)
+    {
+      res.view({myReviews: user.reviews});
+    });
+  },
+  
   new: function(req,res)
   {
     Series.findOne({id:parseInt(req.param("series"))}).done(function(err, series)
@@ -25,12 +33,9 @@ module.exports = {
   
   series: function(req,res)
   {
-    Series.findOne({id:parseInt(req.param("series"))}).done(function(err, series)
+    Series.findOne({id:parseInt(req.param("series"))}).populate("reviews").done(function(err, series)
     {
-      Review.find({series:parseInt(req.param("series"))}).done(function(err, data)
-      {
-        res.view({reviews: data, series:series});
-      });
+      res.view({series:series});
     });
   },
 };

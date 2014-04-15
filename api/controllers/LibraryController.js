@@ -45,10 +45,12 @@ module.exports = {
 				data.progress = progress;
 				data.save(function(err)
 				{
-					// done!
+					res.send("done");
 				});
 			}
-			res.send("done");
+      else
+          res.send("done");
+			
 		});
 	},
 

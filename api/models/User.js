@@ -32,19 +32,16 @@ module.exports = {
 		type: 'array',
 		defaultsTo: []
 	},
+  
+  library: {
+    collection:"library",
+    via:"user"
+  },
 	
 	validate: function(password, cb)
 	{
 		bcrypt.compare(password, this.password, cb);
 	},
-  
-  	getSeries: function (callback) {
-  		WatchingStatus.findByUser(this.id, function(err, data)
-  		{
-  			if ( !err )
-  				callback(data);
-  		});
-  	}
   	
   },
   

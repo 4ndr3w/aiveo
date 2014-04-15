@@ -58,7 +58,6 @@ module.exports = {
 			{
 				User.findOneByUsername(friends[index], function (err, user)
 				{
-
 					Library.find({user: user.id}).done(function(err, obj)
 					{
 						if ( obj != undefined )
@@ -81,39 +80,7 @@ module.exports = {
 		}
 		fetch();
 	},
-	
-	getUserFeed: function(friends, callback)
-	{
-		var index = 0;
-		var feed = new Array();
-		function fetch()
-		{
-			if ( index < friends.length )
-			{
-				User.findOneByUsername(friends[index]).done(function(err, data)
-				{
-					Library.find({user:data.id}).sort("updatedAt").limit(10).done(function(err, userlib)
-					{
-						for ( var i = 0; i < userlib.length; i++ )
-						{
-							userlib[i].username = friends[index];
-						}
-						if ( !err && userlib )
-							feed = feed.concat(userlib);
-						index++;
-						fetch();
-					});
-				});
-			}
-			else
-			{
-				callback(null, feed);
-			}
-		}
-		fetch();
-		
-	},
-	
+  
 	getForUsersAndSeries: function(series, friends, callback)
 	{
 		if ( friends == undefined )
@@ -160,8 +127,7 @@ module.exports = {
 	
   attributes: {
   	user: {
-  		model: 'user',
-  		required: true
+  		model: 'user'
   	},
   	
     series: {
