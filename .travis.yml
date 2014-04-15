@@ -1,3 +1,4 @@
 language: node_js
+services: mongodb memcached
 node_js:
   - "0.10"
