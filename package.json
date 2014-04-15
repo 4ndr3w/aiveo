@@ -16,9 +16,15 @@
 	    "request": "~2.34.0",
       "async": "~0.7.0"
     },
+    "devDependencies": {
+      "mocha": "*",
+      "assert": "*",
+      "supertest": "*"
+    },
     "scripts": {
         "start": "node app.js",
-        "debug": "node debug app.js"
+        "debug": "node debug app.js",
+        "test": "mocha"
     },
     "main": "app.js",
     "repository": "",
