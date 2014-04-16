@@ -1,6 +1,12 @@
 language: node_js
-services: 
-  - mongodb
-  - memcached
+services:
+- mongodb
+- memcached
 node_js:
-  - "0.10"
+- '0.10'
+deploy:
+  provider: heroku
+  app: aiveo
+  on: master
+  api_key:
+    secure: BFmVlKiiGesN70XqxMt+G3v7W6BnXcKRNyNWaQv/656sKTGj0M/iLAwlBQhI/KRTUaDAkQQyfDTp9722pj2ChRH6q/UZzJmDY0XuUIT5Pz7BwluYNFRArAQ88b3CqhX/aSKEXue5OgItH4QXri9iojDvNcNaMY4wrnWsSLnt7Js=
