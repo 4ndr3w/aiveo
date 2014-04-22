@@ -42,10 +42,10 @@ module.exports = {
     },
   
 	view: function(req,res) {
-		Series.find({id:parseInt(req.param("series"))}).done(function(err, series)
+		Series.find({id:parseInt(req.param("series"))}).exec(function(err, series)
 		{
         series = series[0];
-				Library.findOne({user:req.session.user.id, series:parseInt(req.param("series"))}).done(function(err, entry)
+				Library.findOne({user:req.session.user.id, series:parseInt(req.param("series"))}).exec(function(err, entry)
 				{
 					if ( entry == undefined )
 						entry = {status: "Add to Library", progress: 0};
@@ -53,7 +53,7 @@ module.exports = {
 					{
 						Library.getForUsersAndSeries(parseInt(req.param("series")), loggedinUser.friends, function(err, friendWatchingData)
 						{
-              Review.find({series:parseInt(req.param("series"))}).limit(4).done(function(err, reviews)
+              Review.find({series:parseInt(req.param("series"))}).limit(4).exec(function(err, reviews)
               {
   							res.view({title:series.SeriesName, series: series, watchingStatus: entry.status, totalEpisodes:series.totalEpisodes, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData, reviews: reviews});
               });
@@ -70,7 +70,7 @@ module.exports = {
 		{
 			if (err || !data )
 			{
-        Series.find({id:parseInt(req.param("series"))}).done(function(err, series)
+        Series.find({id:parseInt(req.param("series"))}).exec(function(err, series)
         {
           series = series[0];
 					var getRequest = {
@@ -103,7 +103,7 @@ module.exports = {
 		{
 			if (err || !data )
 			{
-				Series.find({id:parseInt(req.param("series"))}).done(function(err, series)
+				Series.find({id:parseInt(req.param("series"))}).exec(function(err, series)
         {
           series = series[0];
 					var getRequest = {

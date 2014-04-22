@@ -23,7 +23,7 @@ module.exports = {
     {
   	  if ( req.param("password") == req.param("password2") )
   	  {
-  	  	User.create({username:req.param("username"), password:req.param("password"), email:req.param("email")}).done(function(err, obj)
+  	  	User.create({username:req.param("username"), password:req.param("password"), email:req.param("email")}).exec(function(err, obj)
   		{
   			if ( !err && obj )
 			{

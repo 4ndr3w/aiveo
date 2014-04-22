@@ -24,14 +24,14 @@ module.exports = {
 	{
 		User.findOneById(req.session.user.id, function(err, currentUser)
 		{
-      User.find({user: currentUser.friends}).done(function(err, friends)
+      User.find({user: currentUser.friends}).exec(function(err, friends)
       {
         var friendIDs = new Array();
         for ( f in friends )
         {
           friendIDs.push(friends[f].id);
         }
-        Library.find({user:friendIDs}).populate("series").populate("user").sort("updatedAt").done(function(err, friendsData)
+        Library.find({user:friendIDs}).populate("series").populate("user").sort("updatedAt").exec(function(err, friendsData)
         {
           res.view({title:"Friends", friends: friendsData, session: req.session});
         });

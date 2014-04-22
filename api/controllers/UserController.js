@@ -38,7 +38,7 @@ module.exports = {
 	  {
 		  if ( !err && user )
 		  {
-			  Library.findByUser(user.id).populate("series").done(function (err, userLibrary)
+			  Library.findByUser(user.id).populate("series").exec(function (err, userLibrary)
 			  {
           res.view({title:req.param("username"), username: req.param("username"),library: userLibrary, session: req.session});		
 			  });
@@ -50,7 +50,7 @@ module.exports = {
   
   managefriends: function(req, res)
   {
-	  User.findOneById(req.session.user.id).done(function(err,user)
+	  User.findOneById(req.session.user.id).exec(function(err,user)
 	  {
 		  if ( req.param("newfriend") )
 		  {
@@ -72,7 +72,7 @@ module.exports = {
 				  return;
 			  }
 			  
-			  User.findOneByUsername(req.param("newfriend")).done(function(err, newfriend)
+			  User.findOneByUsername(req.param("newfriend")).exec(function(err, newfriend)
 			  {
 				  if ( err || newfriend == undefined )
 				  {
@@ -111,7 +111,7 @@ module.exports = {
   {
     if ( req.param("changepassword") && req.param("oldpassword") && req.param("newpassword") && req.param("newpassword") == req.param("newpassword2") )
     {
-      User.findOneById(req.session.user.id).done(function(err, user)
+      User.findOneById(req.session.user.id).exec(function(err, user)
       {
         user.validate(req.param("oldpassword"), function (err, valid)
         {

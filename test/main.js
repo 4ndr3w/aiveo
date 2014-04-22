@@ -29,7 +29,7 @@ describe("aiveo", function()
     it("should return data", function(cb)
     {
       this.timeout(5000);
-      Series.find({id:test_series_id}).done(function(err, data)
+      Series.find({id:test_series_id}).exec(function(err, data)
       {
         if ( err ) throw err;
         cb();
@@ -39,7 +39,7 @@ describe("aiveo", function()
     it("should be valid data", function()
     { 
       this.timeout(5000);
-      Series.find({id:test_series_id}).done(function(err, data)
+      Series.find({id:test_series_id}).exec(function(err, data)
       {
         if ( err ) throw err;
         assert.equal(1, data.length);
@@ -64,7 +64,7 @@ describe("aiveo", function()
   {
     it("should create without error", function(done)
     {
-      User.create({username:"test", password:"test123", email:"test@aiveo.tv", friends: []}).done(function(err, user)
+      User.create({username:"test", password:"test123", email:"test@aiveo.tv", friends: []}).exec(function(err, user)
       {
         if ( err ) throw err;
         done();
@@ -73,7 +73,7 @@ describe("aiveo", function()
     
     it("should error if user is duplicated", function(done)
     {
-      User.create({username:"test", password:"test123", email:"test@aiveo.tv", friends: []}).done(function(err, user)
+      User.create({username:"test", password:"test123", email:"test@aiveo.tv", friends: []}).exec(function(err, user)
       {
         if (!err) throw err;
         done();
@@ -82,7 +82,7 @@ describe("aiveo", function()
     
     it("should authenticate", function(done)
     {
-      User.findOne({username:"test"}).done(function(err, user)
+      User.findOne({username:"test"}).exec(function(err, user)
       {
         user.validate("test123", function(err, ok)
         {

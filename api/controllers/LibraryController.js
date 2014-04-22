@@ -21,7 +21,7 @@ module.exports = {
     
 	index: function(req,res)
 	{
-		Library.find({user:req.session.user.id}).populate("series").sort("updatedAt desc").done(function (err, userLibrary)
+		Library.find({user:req.session.user.id}).populate("series").sort("updatedAt desc").exec(function (err, userLibrary)
 		{
 			res.view({title:"Library", library: userLibrary, session: req.session});	
 		});
@@ -36,12 +36,12 @@ module.exports = {
 	
 	setProgressStatus: function(req,res)
 	{
-		Library.findOne({user: req.session.user.id, series: parseInt(req.param("series"))}).populate("series").done(function(err, data)
+		Library.findOne({user: req.session.user.id, series: parseInt(req.param("series"))}).populate("series").exec(function(err, data)
 		{
 			var progress = parseInt(req.param("progress"));
 			if ( !err && data && data.series.totalEpisodes >= progress )
 			{
-        data.status = "Currently Watching";
+        		data.status = "Currently Watching";
 				data.progress = progress;
 				data.save(function(err)
 				{

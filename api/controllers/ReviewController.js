@@ -9,7 +9,7 @@ module.exports = {
   
   index: function(req,res)
   {
-    User.findOne({user:req.session.user.id}).populate("reviews").done(function(err, user)
+    User.findOne({user:req.session.user.id}).populate("reviews").exec(function(err, user)
     {
       res.view({myReviews: user.reviews});
     });
@@ -17,7 +17,7 @@ module.exports = {
   
   new: function(req,res)
   {
-    Series.findOne({id:parseInt(req.param("series"))}).done(function(err, series)
+    Series.findOne({id:parseInt(req.param("series"))}).exec(function(err, series)
     {
       res.view({title:"Review", series: series});
     });
@@ -25,7 +25,7 @@ module.exports = {
   
   view: function(req,res)
   {
-    Review.findOne({id: req.param("id")}).done(function(err, data)
+    Review.findOne({id: req.param("id")}).exec(function(err, data)
     {
       res.view({title: "Review - "+data.title, review:data});
     });
@@ -33,7 +33,7 @@ module.exports = {
   
   series: function(req,res)
   {
-    Series.findOne({id:parseInt(req.param("series"))}).populate("reviews").done(function(err, series)
+    Series.findOne({id:parseInt(req.param("series"))}).populate("reviews").exec(function(err, series)
     {
       res.view({series:series});
     });
