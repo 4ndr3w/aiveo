@@ -11,7 +11,7 @@ module.exports = {
 	
 	updateForUser: function(user, series, status)
 	{
-		Library.findOne({user: user, series: series}).done(function(e, obj)
+		Library.findOne({user: user, series: series}).exec(function(e, obj)
 		{
 			if ( !e && obj )
 			{
@@ -23,7 +23,7 @@ module.exports = {
 			}
 			else
 			{
-				Library.create({user: user, series: series, status: status}).done(function(e, obj)
+				Library.create({user: user, series: series, status: status}).exec(function(e, obj)
 				{
 					return;
 				});
@@ -33,7 +33,7 @@ module.exports = {
 	
 	getStatusForSeries: function(user, series, callback)
 	{
-		Library.findOne({user: user, series: series}).done(function(e, obj)
+		Library.findOne({user: user, series: series}).exec(function(e, obj)
 		{
 			if ( !e && obj )
 				callback(obj.status);
@@ -58,7 +58,7 @@ module.exports = {
 			{
 				User.findOneByUsername(friends[index], function (err, user)
 				{
-					Library.find({user: user.id}).done(function(err, obj)
+					Library.find({user: user.id}).exec(function(err, obj)
 					{
 						if ( obj != undefined )
 						{
@@ -151,7 +151,7 @@ module.exports = {
     },
     
     getUser: function(callback) {
-    	User.findOneById(this.user).done(function(data)
+    	User.findOneById(this.user).exec(function(data)
     	{
     		callback(data);
     	});
