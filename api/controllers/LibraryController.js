@@ -41,15 +41,15 @@ module.exports = {
 			var progress = parseInt(req.param("progress"));
 			if ( !err && data && data.series.totalEpisodes >= progress )
 			{
-        		data.status = "Currently Watching";
-				data.progress = progress;
-				data.save(function(err)
+                Library.update(data.id, {progress: progress, status: "Currently Watching"})
+                .exec(function(err)
 				{
-					res.send("done");
+                  if (err) res.send(500);
+				  else res.send(200);
 				});
 			}
-      else
-          res.send("done");
+          else
+            res.send("done");
 			
 		});
 	},

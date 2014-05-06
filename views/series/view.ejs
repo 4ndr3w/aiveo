@@ -1,5 +1,6 @@
 
 <% var last_season = 0; %>
+<% console.log(series.episodes[i]); %>
 <div class="modal fade" id="selectLastViewed" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -66,10 +67,10 @@
       <% if ( watchingStatus == "Currently Watching" ) { %>
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h3 class="panel-title">Last Watched: <strong><%= series.episodes[completedEpisodes-1].EpisodeName %></strong></h3>
+          <h3 class="panel-title">Last Watched: <strong><%= series.episodes[completedEpisodes].EpisodeName %></strong></h3>
         </div>
         <div class="panel-body">
-          <%= series.episodes[completedEpisodes-1].Overview %>
+          <%= series.episodes[completedEpisodes].Overview %>
         </div>
       </div>
       <% } %>

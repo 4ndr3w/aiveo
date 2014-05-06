@@ -33,10 +33,15 @@ module.exports = {
 		defaultsTo: []
 	},
   
-  library: {
-    collection:"library",
-    via:"user"
-  },
+    library: {
+      collection:"library",
+      via:"user"
+    },
+    
+    reviews: {
+      collection: "review",
+      via:"user"
+    },
 	
 	validate: function(password, cb)
 	{

@@ -11,7 +11,7 @@ module.exports = {
 	
 	updateForUser: function(user, series, status)
 	{
-		Library.findOne({user: user, series: series}).exec(function(e, obj)
+		Library.findOne({user: user.toString(), series: series}).exec(function(e, obj)
 		{
 			if ( !e && obj )
 			{
@@ -23,7 +23,7 @@ module.exports = {
 			}
 			else
 			{
-				Library.create({user: user, series: series, status: status}).exec(function(e, obj)
+				Library.create({user: user.toString(), series: series, status: status}).exec(function(e, obj)
 				{
 					return;
 				});
@@ -127,7 +127,7 @@ module.exports = {
 	
   attributes: {
   	user: {
-  		model: 'user'
+  		model: 'user',
   	},
   	
     series: {

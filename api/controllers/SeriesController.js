@@ -14,7 +14,6 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
-
 var tvdb = require("../../cachedTVDB"),
 	request = require("request");
 
@@ -104,8 +103,8 @@ module.exports = {
 			if (err || !data )
 			{
 				Series.find({id:parseInt(req.param("series"))}).exec(function(err, series)
-        {
-          series = series[0];
+                {
+                    series = series[0];
 					var getRequest = {
 						method: "GET",
 						url: series.fanart,
