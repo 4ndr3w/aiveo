@@ -17,9 +17,10 @@ function silentErrorHandler(err)
 
 
 describe("aiveo", function()
-{   
+{
   it("should lift", function(cb)
   {
+    this.timeout(5000);
     Sails.lift({}, function(err, sails)
     {    
       User.findOne({username:"test"}).exec(function(err, user)
