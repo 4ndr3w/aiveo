@@ -87,7 +87,12 @@ module.exports = {
     },
     totalEpisodes:{
       type:"integer"
+    },
+      
+    reviews: {
+      collection: "review",
+      via: "series"
     }
-	}
+  }
 
 };

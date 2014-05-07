@@ -3,6 +3,11 @@
 	  <div class="panel-heading"><h3 class="panel-title">Your Reviews</h3></div>
 
 	  <table class="table">
+        <% _.each(myReviews, function(review) { %>
+          <tr>
+            <td><a href="/review/view/<%= review.id %>"><strong><%= review.title %></strong> on <strong><%= review.series.SeriesName %></strong></a></td>
+          </tr>
+        <% }); %>
 	  </table>
 	</div>
 </div>

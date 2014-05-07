@@ -1,7 +1,7 @@
 <div class="container">
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h2 class="panel-title"><%= review.title %></h2>
+      <h2 class="panel-title">Review: <strong><%= review.title %></strong> by <strong><%= review.user.username %></strong> on <strong><%= review.series.SeriesName %></strong></h2>
     </div>
     <div class="panel-body">
       <%= review.body %>

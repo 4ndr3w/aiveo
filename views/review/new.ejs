@@ -1,4 +1,5 @@
 <div class="container">
+  <h4>Review of <%= series.SeriesName %></h4>
   <form action="/review/new/<%= series.id %>">
     <input type="text" class="form-control" name="title" placeholder="Title"><br>
     <textarea name="body" class="form-control" rows="10" placeholder="Write your review here"></textarea><br>

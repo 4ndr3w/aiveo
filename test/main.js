@@ -157,4 +157,53 @@ describe("aiveo", function()
       });
     });
   });
+  
+  describe("reviews", function()
+  {
+    
+    var test_review = {title:"Test", series: test_series_id, body:"This is a test review"};
+    it("should create", function(done)
+    {
+      var req = request(Sails.ws.server).get("/review/new?title="+test_review.title+"&series="+test_review.series+"&body="+test_review.body);
+      req.cookies = Cookies;
+      req.expect(302).end(function(err, res)
+      {
+        if ( err ) throw err;
+        Review.findOne({title:"Test", user: test_user.id}).populate("series").exec(function(err, data)
+        {
+          if ( err ) throw err;
+          assert.equal(data.title, test_review.title);
+          assert.equal(data.series.id, test_review.series);
+          assert.equal(data.body, test_review.body);
+          test_review.id = data.id;
+          done();
+        });
+      });
+    });
+    
+    it("should view by id", function(done)
+    {
+      var req = request(Sails.ws.server).get("/review/view/"+test_review.id);
+      req.cookies = Cookies;
+      req.expect(200).end(done);
+    });
+    
+    it("should view by series", function(done)
+    {
+      var req = request(Sails.ws.server).get("/review/series/"+test_series_id);
+      req.cookies = Cookies;
+      req.expect(200).end(function(err, res)
+      {
+        if ( err ) throw err;
+        assert.notEqual(res.text.indexOf(test_review.body), -1);
+        done();
+      });
+    });
+    
+    it("should delete", function(done)
+    {
+      delete test_review.id;
+      Review.destroy(test_review).exec(done);
+    });      
+  });
 });
