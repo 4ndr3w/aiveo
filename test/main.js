@@ -10,6 +10,8 @@ var session_variable = "";
 var test_series_id = 150471;
 var test_series_name = "Angel Beats!";
 
+var test_review = {title:"Test", series: test_series_id, body:"This is a test review"};
+
 function silentErrorHandler(err)
 {
   if ( err ) throw err;
@@ -23,13 +25,7 @@ describe("aiveo", function()
     this.timeout(5000);
     Sails.lift({}, function(err, sails)
     {    
-      User.findOne({username:"test"}).exec(function(err, user)
-      {
-        if ( user != undefined )
-          user.destroy(silentErrorHandler);
-        cb();
-      });
-      
+      cb();
     });
   });
   
@@ -106,7 +102,7 @@ describe("aiveo", function()
       Series.find({id:test_series_id}).exec(function(err, data)
       {
         if ( err ) throw err;
-        assert.equal(1, data.length);
+        assert.equal(1, data.length); 
         assert.equal(test_series_name, data[0].SeriesName);
       });
     });
@@ -161,8 +157,6 @@ describe("aiveo", function()
   
   describe("reviews", function()
   {
-    
-    var test_review = {title:"Test", series: test_series_id, body:"This is a test review"};
     it("should create", function(done)
     {
       var req = request(Sails.ws.server).get("/review/new?title="+test_review.title+"&series="+test_review.series+"&body="+test_review.body);
@@ -199,12 +193,14 @@ describe("aiveo", function()
         assert.notEqual(res.text.indexOf(test_review.body), -1);
         done();
       });
-    });
-    
-    it("should delete", function(done)
-    {
-      delete test_review.id;
-      Review.destroy(test_review).exec(done);
-    });      
+    }); 
+  });
+  
+  after(function()
+  {
+    delete test_review.id;
+    Review.destroy(test_review).exec(function (err) { if ( err ) console.log(err); });
+    Library.destroy({user:test_user.id}).exec(function (err) { if ( err ) console.log(err); });
+    User.destroy({username:"test"}).exec(function (err) { if ( err ) console.log(err); });
   });
 });

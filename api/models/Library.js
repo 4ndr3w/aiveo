@@ -145,6 +145,11 @@ module.exports = {
 		type: 'integer',
 		defaultsTo: 0
 	},
+	  
+	rating:{ 
+		type: 'integer',
+		defaultsTo: 0
+	},
     
     getSeries: function(callback) {
     	tvdb.getSeriesInfo(this.series, callback);
