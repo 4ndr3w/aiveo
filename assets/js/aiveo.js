@@ -60,13 +60,47 @@ $("#completedEpisodeButton").click(function()
 });
 
 
+function shadeStars(value)
+{
+	for ( var i = 0; i < 5; i++ )
+	{
+		if ( i < value )
+		{
+			$(".rating-"+(i+1)).addClass("glyphicon-star");
+			$(".rating-"+(i+1)).removeClass("glyphicon-star-empty");
+		}
+		else
+		{
+			$(".rating-"+(i+1)).addClass("glyphicon-star-empty");
+			$(".rating-"+(i+1)).removeClass("glyphicon-star");
+		}
+	}
+}
+
+$(".rating").click(function()
+{
+	var value = $(this).attr("value");
+	shadeStars(value);
+	$(this).parent().attr("rating",value);
+	io.socket.get("/library/setRating?series="+$(this).attr("series")+"&rating="+value, function(response)
+	{
+
+	});
+});
+
+$(".rating").mouseover(function()
+{
+	shadeStars($(this).attr("value"));
+});
+
+$(".rating").mouseout(function()
+{
+	shadeStars($(this).parent().attr("rating"));
+});
 
 $(".ratingStar").click(function()
 {
 	seriesID = $(this).attr("series");
 	rating = $(this).attr("rating");
-	socket.io.get("/library/setRating?seriesID="+seriesID+"&rating="+rating, function(response)
-	{
-		// done
-	});
+
 });

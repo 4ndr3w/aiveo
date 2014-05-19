@@ -5,7 +5,7 @@ body
 
 .navbar-black
 {
-	background-color:black; 
+	background-color:black;
 	color:grey;
 }
 
@@ -76,4 +76,8 @@ body
 
 .fill-width {
   width: 100%;
+}
+
+.rating {
+	font-size: 20px;
 }

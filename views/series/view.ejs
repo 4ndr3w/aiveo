@@ -31,13 +31,18 @@
 
 <div id="imageholder" class="imageholder"></div>
 <div class="container panel panel-default">
-	
+
 	<div class="col-md-3">
-    	<img src="/series/poster/<%= series.id %>" class="series-big-image" alt="..."><br>
+      <div class="text-center" rating="<%= rating %>">
+        <img src="/series/poster/<%= series.id %>" class="series-big-image" alt="..."><br>
+        <% for ( var i = 0; i < 5; i++ ) { %>
+          <span class="glyphicon <%= (rating>i?"glyphicon-star":"glyphicon-star-empty") %> rating rating-<%= (i+1) %>" value="<%= (i+1) %>" series="<%= series.id %>"></span>
+        <% } %>
+      </div>
 	</div>
 	<div class="col-md-9">
-		<h2 class="series-big-header"><%= series.SeriesName %></h2>	 
-		
+		<h2 class="series-big-header"><%= series.SeriesName %></h2>
+
 		<div class="pull-right">
 			<div class="btn-group series-big-addbutton">
 	  			<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -52,7 +57,7 @@
   					<li><a href="#" onClick="dropSeries(<%= series.id %>)">Dropped</a></li>
 				</ul>
 			</div>
-		</div>	
+		</div>
 			<div id="progressBarContainer" class="container-fluid <% if ( watchingStatus != "Currently Watching" ) { %>hide<% } %>">
 				<div class="col-md-11">
 					<div class="progress">
@@ -74,7 +79,7 @@
         </div>
       </div>
       <% } %>
-      
+
 		<div class="panel panel-default">
 	  	 	<div class="panel-heading">
 	    	  <h3 class="panel-title">Overview</h3>
@@ -86,9 +91,9 @@
 
     <div class="panel panel-default">
       <div class="panel-heading">
-       
+
       <h3 class="panel-title">Reviews</h3>
-        
+
       </div>
       <div class="list-group">
         <% _.each(reviews, function(r) { %>
@@ -101,7 +106,7 @@
           <h4 class="list-group-item-heading btn btn-default">Write a review</h4>
           <p class="list-group-item-text"></p>
         </a>
-        
+
       </div>
     </div>
 
@@ -111,9 +116,9 @@
 	  	 	<div class="panel-heading">
 	    	  <h3 class="panel-title">Friends</h3>
 	  		</div>
-			
+
 			<ul class="list-group">
-			<% for ( friend in friends ) { %>	
+			<% for ( friend in friends ) { %>
 				<li class="list-group-item">
 					<a href="/user/<%= friends[friend].username %>"><%= friends[friend].username %></a>
 					<span class="pull-right"><%= friends[friend].status %></span>
@@ -133,7 +138,7 @@ $(window).ready(function()
 	var img = new Image();
 	img.src = "/series/fanart/<%= series.id %>";
 	var options = {};
-	
+
 
 	img.onload = function()
 	{
@@ -147,7 +152,7 @@ $(window).ready(function()
 			$("body").css("background-color", "black");
 		});
 	}
-	
-	
+
+
 });
 </script>

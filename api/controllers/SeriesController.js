@@ -18,8 +18,8 @@ var tvdb = require("../../cachedTVDB"),
 	request = require("request");
 
 module.exports = {
-	
-	
+
+
     search: function(req,res) {
     	var results = tvdb.searchForSeries(req.param("query"), function(results)
     	{
@@ -36,10 +36,10 @@ module.exports = {
 				}
 				res.view({title: "Search - "+req.param("query"), results:results, getLibraryStatus: getLibraryStatus, session: req.session});
 			});
-    		
+
     	});
     },
-  
+
 	view: function(req,res) {
 		Series.find({id:parseInt(req.param("series"))}).exec(function(err, series)
 		{
@@ -54,14 +54,14 @@ module.exports = {
 						{
               Review.find({series:parseInt(req.param("series"))}).limit(4).exec(function(err, reviews)
               {
-  							res.view({title:series.SeriesName, series: series, watchingStatus: entry.status, totalEpisodes:series.totalEpisodes, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData, reviews: reviews});
+  							res.view({title:series.SeriesName, series: series, rating: entry.rating, watchingStatus: entry.status, totalEpisodes:series.totalEpisodes, completedEpisodes: entry.progress, session: req.session, friends: friendWatchingData, reviews: reviews});
               });
 						});
 					});
 				});
 		});
 	},
-	
+
 	poster: function(req,res)
 	{
 		res.set("content-type", "image/png");
@@ -92,9 +92,9 @@ module.exports = {
 				res.write(data, 'binary');
 				res.end();
 			}
-		});	
+		});
 	},
-	
+
 	fanart: function(req,res)
 	{
 		res.set("content-type", "image/png");
@@ -125,7 +125,7 @@ module.exports = {
 				res.write(data, 'binary');
 				res.end();
 			}
-		});	
+		});
 	},
 
   /**
@@ -134,5 +134,5 @@ module.exports = {
    */
   _config: {}
 
-  
+
 };
