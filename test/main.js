@@ -22,7 +22,7 @@ describe("aiveo", function()
 {
   it("should lift", function(cb)
   {
-    this.timeout(5000);
+    this.timeout(10000);
     Sails.lift({}, function(err, sails)
     {
       cb();
