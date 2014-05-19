@@ -8,7 +8,7 @@
 
 module.exports = {
 
-	
+
 	updateForUser: function(user, series, status)
 	{
 		Library.findOne({user: user.toString(), series: series}).exec(function(e, obj)
@@ -30,7 +30,7 @@ module.exports = {
 			}
 		})
 	},
-	
+
 	getStatusForSeries: function(user, series, callback)
 	{
 		Library.findOne({user: user, series: series}).exec(function(e, obj)
@@ -41,7 +41,7 @@ module.exports = {
 				callback("Add to Library");
 		});
 	},
-	
+
 	getForUsers: function(friends, callback)
 	{
 		if ( friends == undefined )
@@ -49,7 +49,7 @@ module.exports = {
 			callback(null, []);
 			return;
 		}
-		
+
 		var data = [];
 		var index = 0;
 		function fetch()
@@ -66,7 +66,7 @@ module.exports = {
 								obj = [obj];
 							for ( var i = 0; i < obj.length; i++ )
 							{
-								obj[i].username = friends[index];	
+								obj[i].username = friends[index];
 							}
 							data = data.concat(obj);
 						}
@@ -80,7 +80,7 @@ module.exports = {
 		}
 		fetch();
 	},
-  
+
 	getForUsersAndSeries: function(series, friends, callback)
 	{
 		if ( friends == undefined )
@@ -88,7 +88,7 @@ module.exports = {
 			callback(null, []);
 			return;
 		}
-		
+
 		var data = [];
 		var index = 0;
 		function fetch()
@@ -105,7 +105,7 @@ module.exports = {
 								obj = [obj];
 							for ( var i = 0; i < obj.length; i++ )
 							{
-								obj[i].username = friends[index];	
+								obj[i].username = friends[index];
 							}
 							data = data.concat(obj);
 							index++;
@@ -124,43 +124,43 @@ module.exports = {
 		}
 		fetch();
 	},
-	
+
   attributes: {
   	user: {
   		model: 'user',
   	},
-  	
+
     series: {
     	model: 'series',
       required: true
     },
-    
+
     status: {
     	type: 'string',
     	required: true,
 		  in: ["Plan to Watch", "Currently Watching", "Completed", "Dropped"]
     },
-	
-	progress: {
-		type: 'integer',
-		defaultsTo: 0
-	},
-	  
-	rating:{ 
-		type: 'integer',
-		defaultsTo: 0
-	},
-    
+
+  	progress: {
+  		type: 'integer',
+  		defaultsTo: 0
+  	},
+
+  	rating:{
+  		type: 'integer',
+      defaultsTo: 0,
+      in: [0,1,2,3,4,5]
+  	},
+
     getSeries: function(callback) {
     	tvdb.getSeriesInfo(this.series, callback);
     },
-    
+
     getUser: function(callback) {
     	User.findOneById(this.user).exec(function(data)
     	{
     		callback(data);
     	});
     }
-    
   }
 };

@@ -18,22 +18,22 @@
 var tvdb = require("../../cachedTVDB");
 
 module.exports = {
-    
+
 	index: function(req,res)
 	{
 		Library.find({user:req.session.user.id}).populate("series").sort("updatedAt desc").exec(function (err, userLibrary)
 		{
-			res.view({title:"Library", library: userLibrary, session: req.session});	
+			res.view({title:"Library", library: userLibrary, session: req.session});
 		});
 	},
-	
-  
+
+
 	setLibraryStatus: function(req,res)
 	{
 		Library.updateForUser(req.session.user.id, parseInt(req.param("series")), req.param("status"));
 		res.send("done");
 	},
-	
+
 	setProgressStatus: function(req,res)
 	{
 		Library.findOne({user: req.session.user.id, series: parseInt(req.param("series"))}).populate("series").exec(function(err, data)
@@ -50,9 +50,25 @@ module.exports = {
 			}
           else
             res.send("done");
-			
+
 		});
 	},
+
+
+  setRating: function(req,res)
+  {
+    if ( req.param("series") && req.param("rating") )
+    {
+      Library.findOne({user: req.session.user.id, series: parseInt(req.param("series"))}).exec(function(err, data)
+      {
+        data.rating = req.param("rating");
+        data.save(function(err)
+        {
+          res.json({success:(!err)})
+        });
+      });
+    }
+  },
 
   /**
    * Overrides for the settings in `config/controllers.js`
@@ -60,5 +76,5 @@ module.exports = {
    */
   _config: {}
 
-  
+
 };

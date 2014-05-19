@@ -24,11 +24,11 @@ describe("aiveo", function()
   {
     this.timeout(5000);
     Sails.lift({}, function(err, sails)
-    {    
+    {
       cb();
     });
   });
-  
+
   describe("welcome", function()
   {
     it("should redirect to login", function(done)
@@ -36,8 +36,8 @@ describe("aiveo", function()
       request(Sails.ws.server).get("/").expect(302, done);
     });
   });
-  
-  
+
+
   describe("user", function()
   {
     it("should create without error", function(done)
@@ -49,7 +49,7 @@ describe("aiveo", function()
         done();
       });
     });
-    
+
     it("should error if user is duplicated", function(done)
     {
       User.create({username:"test", password:"test123", email:"test@aiveo.tv", friends: []}).exec(function(err, user)
@@ -58,7 +58,7 @@ describe("aiveo", function()
         done();
       });
     });
-    
+
     it("should authenticate", function(done)
     {
       User.findOne({username:"test"}).exec(function(err, user)
@@ -71,7 +71,7 @@ describe("aiveo", function()
         });
       });
     });
-    
+
     it("should authenticate via HTTP", function(done)
     {
       request(Sails.ws.server).get("/welcome/authenticate?username=test&password=test123")
@@ -82,7 +82,7 @@ describe("aiveo", function()
       });
     });
   });
-  
+
   describe("Series", function()
   {
 
@@ -95,24 +95,24 @@ describe("aiveo", function()
         cb();
       });
     });
-  
+
     it("should be valid data", function()
-    { 
+    {
       this.timeout(5000);
       Series.find({id:test_series_id}).exec(function(err, data)
       {
         if ( err ) throw err;
-        assert.equal(1, data.length); 
+        assert.equal(1, data.length);
         assert.equal(test_series_name, data[0].SeriesName);
       });
     });
-    
+
     it("should be cached", function(cb)
     {
       cachedTVDB.cache.get(test_series_id+"-info", function(err, result)
       {
         if ( err ) throw err;
-        
+
         data = JSON.parse(result);
         assert.equal(test_series_name, data.SeriesName);
         cb();
@@ -136,7 +136,7 @@ describe("aiveo", function()
         });
       });
     });
-    
+
     it("should update series status", function(done)
     {
       var req = request(Sails.ws.server).get("/library/setProgressStatus?series="+test_series_id+"&progress=5");
@@ -153,8 +153,24 @@ describe("aiveo", function()
         });
       });
     });
+
+    it("should set rating", function(done)
+    {
+      var req = request(Sails.ws.server).get("/library/setRating?series="+test_series_id+"&rating=5");
+      req.cookies = Cookies;
+      req.expect(200).end(function(err, res)
+      {
+        if ( err ) throw err;
+        Library.findOne({user:test_user.id, series: test_series_id}).exec(function(err, data)
+        {
+          if ( err ) throw err;
+          assert.equal(data.rating, 5);
+          done();
+        });
+      });
+    });
   });
-  
+
   describe("reviews", function()
   {
     it("should create", function(done)
@@ -175,14 +191,14 @@ describe("aiveo", function()
         });
       });
     });
-    
+
     it("should view by id", function(done)
     {
       var req = request(Sails.ws.server).get("/review/view/"+test_review.id);
       req.cookies = Cookies;
       req.expect(200).end(done);
     });
-    
+
     it("should view by series", function(done)
     {
       var req = request(Sails.ws.server).get("/review/series/"+test_series_id);
@@ -193,9 +209,9 @@ describe("aiveo", function()
         assert.notEqual(res.text.indexOf(test_review.body), -1);
         done();
       });
-    }); 
+    });
   });
-  
+
   after(function()
   {
     delete test_review.id;

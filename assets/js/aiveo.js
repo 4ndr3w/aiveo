@@ -32,7 +32,7 @@ function setProgress(id, progress)
 	$("#watchingProgressBar").attr("completed-episodes", completed);
 	$("#watchingProgressBar").css("width", Math.floor(completed/total*100)+"%");
 	$("#watchingProgressBar").text(completed+"/"+total);
-	
+
   $.ajax({
     url: "/library/setLibraryStatus?series="+id+"&status=Currently Watching",
     success: function()
@@ -42,7 +42,7 @@ function setProgress(id, progress)
     }
   });
   $("#progressBarContainer").removeClass("hide");
-	
+
 }
 
 $("#completedEpisodeButton").click(function()
@@ -55,6 +55,18 @@ $("#completedEpisodeButton").click(function()
 	$("#watchingProgressBar").attr("completed-episodes", completed);
 	$("#watchingProgressBar").css("width", Math.floor(completed/total*100)+"%");
 	$("#watchingProgressBar").text(completed+"/"+total);
-	
+
 	$.get("/library/setProgressStatus?series="+id+"&progress="+completed);
+});
+
+
+
+$(".ratingStar").click(function()
+{
+	seriesID = $(this).attr("series");
+	rating = $(this).attr("rating");
+	socket.io.get("/library/setRating?seriesID="+seriesID+"&rating="+rating, function(response)
+	{
+		// done
+	});
 });
