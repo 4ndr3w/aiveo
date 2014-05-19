@@ -35,9 +35,7 @@
 	<div class="col-md-3">
       <div class="text-center" rating="<%= rating %>">
         <img src="/series/poster/<%= series.id %>" class="series-big-image" alt="..."><br>
-        <% for ( var i = 0; i < 5; i++ ) { %>
-          <span class="glyphicon <%= (rating>i?"glyphicon-star":"glyphicon-star-empty") %> rating rating-<%= (i+1) %>" value="<%= (i+1) %>" series="<%= series.id %>"></span>
-        <% } %>
+        <% include ../supporting/rating.ejs %>
       </div>
 	</div>
 	<div class="col-md-9">

@@ -1,16 +1,16 @@
 <div class="container">
 	<% if ( library.length != 0 ) { %>
 
-    
+
 	<div class="panel panel-default">
 	  <div class="panel-heading"><h3 class="panel-title">Currently Watching</h3></div>
-    
+
     <div id="recent">
       <%
-      var i = 0; 
+      var i = 0;
       for (i = 0; i < library.length && i < 4; i++ ) { %>
           <a href="/series/view?series=<%= library[i].series.id %>"><img class="recent-thumbnail" src="/series/poster/<%= library[i].series.id %>"></img></a>
-      <% 
+      <%
       }
       var n = 4-i;
       for (var spacers = 0; n < spacers; spacers++ )
@@ -21,14 +21,14 @@
       }
       %>
     </div>
-    
+
 	  <table class="table">
 		  <tr>
 			  <th>Series</th>
 			  <th>Progress</th>
 		  </tr>
-		  <% for (var i = 0; i < library.length; i++ ) 
-		  	 { 
+		  <% for (var i = 0; i < library.length; i++ )
+		  	 {
 			    if ( library[i].status == "Currently Watching" )
 				{
 		  %>
@@ -40,7 +40,7 @@
 	  		 } %>
 	  </table>
 	</div>
-	
+
 	<div class="panel panel-default">
 	  <div class="panel-heading"><h3 class="panel-title">Plan to Watch</h3></div>
 
@@ -48,8 +48,8 @@
 		  <tr>
 			  <th>Series</th>
 		  </tr>
-		  <% for (var i = 0; i < library.length; i++ ) 
-		  	 { 
+		  <% for (var i = 0; i < library.length; i++ )
+		  	 {
 			    if ( library[i].status == "Plan to Watch" )
 				{
 		  %>
@@ -60,27 +60,31 @@
 	  		 } %>
 	  </table>
 	</div>
-	
+
 	<div class="panel panel-default">
 	  <div class="panel-heading"><h3 class="panel-title">Completed</h3></div>
 
 	  <table class="table">
 		  <tr>
 			  <th>Series</th>
+				<th><!-- Rating --></th>
 		  </tr>
-		  <% for (var i = 0; i < library.length; i++ ) 
-		  	 { 
-			    if ( library[i].status == "Completed" )
+		  <% for (var i = 0; i < library.length; i++ )
+		  	 {
+			  if ( library[i].status == "Completed" )
 				{
+					var rating = library[i].rating;
+					var series = library[i].series;
 		  %>
 		  <tr>
-			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= library[i].series.SeriesName %></td>
+			  <td><a href="/series/view?series=<%= library[i].series.id %>"><%= series.SeriesName %></td>
+				<td rating="<%= rating %>"><% include ../supporting/rating.ejs %></td>
 		  </tr>
 		  <% }
 	  		 } %>
 	  </table>
 	</div>
-	
+
 	<div class="panel panel-default">
 	  <div class="panel-heading"><h3 class="panel-title">Dropped</h3></div>
 
@@ -89,8 +93,8 @@
 			  <th>Series</th>
 			  <th>Progress</th>
 		  </tr>
-		  <% for (var i = 0; i < library.length; i++ ) 
-		  	 { 
+		  <% for (var i = 0; i < library.length; i++ )
+		  	 {
 			    if ( library[i].status == "Dropped" )
 				{
 		  %>
