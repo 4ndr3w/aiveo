@@ -8,48 +8,49 @@
 
 var bcrypt = require("bcrypt"),
 	salt = bcrypt.genSaltSync(10);
-	
+
 module.exports = {
   attributes: {
-  	
+
   	username: {
   		type: 'string',
   		required: true,
   		unique: true
   	},
-  	
+
   	password: {
   		type: 'string',
   		required:true
   	},
-	
-	email: {
-		type: 'email',
-		required: true
-	},
-	
-	friends: {
-		type: 'array',
-		defaultsTo: []
-	},
-  
+
+  	email: {
+  		type: 'email',
+  		required: true,
+      unique: true
+  	},
+
+  	friends: {
+  		type: 'array',
+  		defaultsTo: []
+  	},
+
     library: {
       collection:"library",
       via:"user"
     },
-    
+
     reviews: {
       collection: "review",
       via:"user"
     },
-	
+
 	validate: function(password, cb)
 	{
 		bcrypt.compare(password, this.password, cb);
 	},
-  	
+
   },
-  
+
   beforeCreate: function(values, done)
   {
 	  bcrypt.hash(values.password, salt, function(err, hash)

@@ -1,9 +1,11 @@
 language: node_js
 services:
-- mongodb
-- memcached
+  - mysql
+  - memcached
 node_js:
-- '0.10'
+  - '0.10'
+before_script:
+  - mysql -e 'create database aiveo;'
 deploy:
   provider: heroku
   app: aiveo

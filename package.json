@@ -12,7 +12,7 @@
 	    "thetvdb-api": "~0.1.0",
 	    "bcrypt": "~0.7.7",
 	    "memjs": ">=0.8.4",
-	    "sails-mongo": "v0.10",
+	    "sails-mysql": "0.10.x",
 	    "request": "~2.34.0",
       "async": "~0.7.0"
     },

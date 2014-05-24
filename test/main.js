@@ -22,7 +22,6 @@ describe("aiveo", function()
 {
   it("should lift", function(cb)
   {
-    this.timeout(10000);
     Sails.lift({}, function(err, sails)
     {
       cb();
@@ -54,9 +53,9 @@ describe("aiveo", function()
     {
       User.create({username:"test", password:"test123", email:"test@aiveo.tv", friends: []}).exec(function(err, user)
       {
-        if (!err) throw err;
+        if (!err) throw new Error("Duplicate check failed");
         done();
-      });
+     });
     });
 
     it("should authenticate", function(done)
