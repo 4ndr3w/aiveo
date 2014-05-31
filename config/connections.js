@@ -18,9 +18,6 @@
  * http://links.sailsjs.org/docs/config/connections
  */
 
-var sqlURL = require("url").parse(process.env.CLEARDB_DATABASE_URL || 'mysql://root@localhost/aiveo');
-var sqlAuth = sqlURL.auth.split(":");
-
 module.exports.connections = {
 
   // Persistent adapter for DEVELOPMENT ONLY
@@ -31,10 +28,7 @@ module.exports.connections = {
 
   mysql: {
     module: "sails-mysql",
-    host: sqlURL.hostname,
-    user: sqlAuth[0],
-    password: sqlAuth[1],
-    database: sqlURL.path.substring(1)
+    url: process.env.CLEARDB_DATABASE_URL || "mysql://root@localhost/aiveo"
   },
 
   tvdb: {
