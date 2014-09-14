@@ -1,33 +1,33 @@
 {
-    "name": "aiveo",
-    "private": true,
-    "version": "0.0.1",
-    "description": "Share and track what you watch",
-    "dependencies": {
-      "sails": "beta",
-      "grunt": "0.4.2",
-      "sails-disk": "~0.10.0",
-      "ejs": "0.8.4",
-      "optimist": "0.3.4",
-	    "thetvdb-api": "~0.1.0",
-	    "bcrypt": "~0.7.7",
-	    "memjs": ">=0.8.4",
-	    "sails-mysql": "0.10.x",
-	    "request": "~2.34.0",
-      "async": "~0.7.0"
-    },
-    "devDependencies": {
-      "mocha": "~1.18.2",
-      "supertest": "~0.11.0",
-      "supertest-session": "~0.0.1"
-    },
-    "scripts": {
-        "start": "node app.js",
-        "debug": "node debug app.js",
-        "test": "mocha -t 10000"
-    },
-    "main": "app.js",
-    "repository": "",
-    "author": "",
-    "license": ""
+  "name": "aiveo",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Share and track what you watch",
+  "dependencies": {
+    "grunt": "0.4.2",
+    "ejs": "0.8.4",
+    "optimist": "0.3.4",
+    "thetvdb-api": "~0.1.0",
+    "bcrypt": "~0.7.8",
+    "memjs": ">=0.8.4",
+    "request": "~2.34.0",
+    "async": "~0.7.0",
+    "sails": "~0.10.5",
+    "sails-disk": "~0.10.3",
+    "sails-mysql": "~0.10.6"
+  },
+  "devDependencies": {
+    "mocha": "~1.21.4",
+    "supertest": "~0.13.0",
+    "supertest-session": "~0.0.1"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "debug": "node debug app.js",
+    "test": "mocha -t 10000"
+  },
+  "main": "app.js",
+  "repository": "",
+  "author": "",
+  "license": ""
 }

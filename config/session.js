@@ -35,7 +35,7 @@ module.exports.session = {
   // url:""
 
   // Uncomment the following lines to use your Mongo adapter as a session store
-  adapter: 'mongo',
+  //adapter: 'mongo',
   //
   // host: 'localhost',
   // port: 27017,
@@ -45,7 +45,7 @@ module.exports.session = {
   // Optional Values:
   //
   // # Note: url will override other connection settings
-  url: process.env.MONGOHQ_URL+"/sessions" || 'mongodb://localhost/sails/sessions',
+  //url: process.env.MONGOHQ_URL+"/sessions" || 'mongodb://localhost/sails/sessions',
   //
   // username: '',
   // password: '',
