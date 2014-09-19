@@ -78,6 +78,7 @@ module.exports = (function () {
       // schema: true,
       // ssl: false,
       // customThings: ['eh']
+      schema: false
     },
 
 
@@ -134,14 +135,16 @@ module.exports = (function () {
      *
      * REQUIRED method if users expect to call Model.find(), Model.findOne(),
      * or related.
-     *  
+     *
      * You should implement this method to respond with an array of instances.
      * Waterline core will take care of supporting all the other different
      * find methods/usages.
      *
      */
-    
+
     find: function (connection, collection, options, cb) {
+      console.log("find called");
+
       if ( options.where.title != undefined )
       {
         tvdbAPI.searchForSeries(options.where.title, function(data)
@@ -175,7 +178,7 @@ module.exports = (function () {
 
       }
       else
-			  return cb("This data is unavailable", []);
+			  cb("This data is unavailable", [{nope:"nope"}]);
     },
 
     /*
@@ -241,4 +244,3 @@ module.exports = (function () {
   return adapter;
 
 })();
-

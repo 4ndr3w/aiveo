@@ -17,21 +17,21 @@
 
 var tvdb = require("../../cachedTVDB"),
     bcrypt = require("bcrypt");
-    
+
 module.exports = {
-    
+
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to UserController)
    */
   _config: {},
-  
+
   logout: function(req,res)
   {
 	  req.session.user = false;
 	  res.redirect("/");
   },
-  
+
   viewuser: function(req, res)
   {
 	  User.findOneByUsername(req.param("username"), function(err, user)
@@ -40,14 +40,14 @@ module.exports = {
 		  {
 			  Library.findByUser(user.id).populate("series").exec(function (err, userLibrary)
 			  {
-          res.view({title:req.param("username"), username: req.param("username"),library: userLibrary, session: req.session});		
+          res.view({title:req.param("username"), username: req.param("username"),library: userLibrary, session: req.session});
 			  });
-      }	
+      }
 		  else
 			  res.view('404');
 	  });
   },
-  
+
   managefriends: function(req, res)
   {
 	  User.findOneById(req.session.user.id).exec(function(err,user)
@@ -62,16 +62,16 @@ module.exports = {
 					  fail = true;
 				  }
 			  }
-			  
+
 			  if ( req.param("newfriend") == req.session.user.username )
 			  	fail = true;
-			  
+
 			  if ( fail )
 			  {
 				  res.view({title:"Friends", session: req.session, friends:user.friends});
 				  return;
 			  }
-			  
+
 			  User.findOneByUsername(req.param("newfriend")).exec(function(err, newfriend)
 			  {
 				  if ( err || newfriend == undefined )
@@ -106,7 +106,7 @@ module.exports = {
 	  	  	res.view({title:"Friends", session: req.session, friends:user.friends});
 	  });
   },
-  
+
   changepassword: function(req,res)
   {
     if ( req.param("changepassword") && req.param("oldpassword") && req.param("newpassword") && req.param("newpassword") == req.param("newpassword2") )
@@ -129,8 +129,8 @@ module.exports = {
           else
             res.view({title: "Change Password"});
         });
-        
-        
+
+
       });
     }
     else

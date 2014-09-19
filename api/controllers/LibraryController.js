@@ -23,6 +23,7 @@ module.exports = {
 	{
 		Library.find({user:req.session.user.id}).populate("series").sort("updatedAt desc").exec(function (err, userLibrary)
 		{
+
 			res.view({title:"Library", library: userLibrary, session: req.session});
 		});
 	},

@@ -1,5 +1,6 @@
 /**
  * Connections
+ * (sails.config.connections)
  *
  * `Connections` are like "saved settings" for your adapters.  What's the difference between
  * a connection and an adapter, you might ask?  An adapter (e.g. `sails-mysql`) is generic--
@@ -15,23 +16,81 @@
  * (this is to prevent you inadvertently sensitive credentials up to your repository.)
  *
  * For more information on configuration, check out:
- * http://links.sailsjs.org/docs/config/connections
+ * http://sailsjs.org/#/documentation/reference/sails.config/sails.config.connections.html
  */
 
 module.exports.connections = {
 
-  // Persistent adapter for DEVELOPMENT ONLY
-  // (data is preserved when the server shuts down)
-  disk: {
-    module: 'sails-disk'
-  },
-
-  mysql: {
-    module: "sails-mysql",
-    url: process.env.CLEARDB_DATABASE_URL || "mysql://root@localhost/aiveo"
+  /***************************************************************************
+  *                                                                          *
+  * Local disk storage for DEVELOPMENT ONLY                                  *
+  *                                                                          *
+  * Installed by default.                                                    *
+  *                                                                          *
+  ***************************************************************************/
+  localDiskDb: {
+    adapter: 'sails-disk'
   },
 
   tvdb: {
-    module: "tvdb"
+	adapter:"tvdb"
+  },
+
+  /***************************************************************************
+  *                                                                          *
+  * MySQL is the world's most popular relational database.                   *
+  * http://en.wikipedia.org/wiki/MySQL                                       *
+  *                                                                          *
+  * Run: npm install sails-mysql                                             *
+  *                                                                          *
+  ***************************************************************************/
+  sql: {
+    adapter: 'sails-mysql',
+    host: '127.0.0.1',
+    user: 'root',
+    password: 'password',
+    database: 'aiveo'
+  },
+
+  /***************************************************************************
+  *                                                                          *
+  * MongoDB is the leading NoSQL database.                                   *
+  * http://en.wikipedia.org/wiki/MongoDB                                     *
+  *                                                                          *
+  * Run: npm install sails-mongo                                             *
+  *                                                                          *
+  ***************************************************************************/
+  someMongodbServer: {
+    adapter: 'sails-mongo',
+    host: 'localhost',
+    port: 27017,
+    // user: 'username',
+    // password: 'password',
+    // database: 'your_mongo_db_name_here'
+  },
+
+  /***************************************************************************
+  *                                                                          *
+  * PostgreSQL is another officially supported relational database.          *
+  * http://en.wikipedia.org/wiki/PostgreSQL                                  *
+  *                                                                          *
+  * Run: npm install sails-postgresql                                        *
+  *                                                                          *
+  *                                                                          *
+  ***************************************************************************/
+  somePostgresqlServer: {
+    adapter: 'sails-postgresql',
+    host: 'YOUR_POSTGRES_SERVER_HOSTNAME_OR_IP_ADDRESS',
+    user: 'YOUR_POSTGRES_USER',
+    password: 'YOUR_POSTGRES_PASSWORD',
+    database: 'YOUR_POSTGRES_DB'
   }
+
+
+  /***************************************************************************
+  *                                                                          *
+  * More adapters: https://github.com/balderdashy/sails                      *
+  *                                                                          *
+  ***************************************************************************/
+
 };

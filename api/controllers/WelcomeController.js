@@ -18,26 +18,27 @@
 var bcrypt = require("bcrypt");
 
 module.exports = {
-    
+
     create: function(req,res)
     {
   	  if ( req.param("password") == req.param("password2") )
   	  {
   	  	User.create({username:req.param("username"), password:req.param("password"), email:req.param("email")}).exec(function(err, obj)
-  		{
-  			if ( !err && obj )
-			{
-				req.session.user = obj;
-				res.redirect("/");
-			}
-			else
-				res.view("welcome/register", {template: "welcome/register", layout:"", noPasswordMatch: false, noUniqueUsername: true});
-  		});
+  		  {
+             console.log(err);
+  			     if ( !err && obj )
+			       {
+				           req.session.user = obj;
+				           res.redirect("/");
+			       }
+			       else
+				           res.view("welcome/register", {template: "welcome/register", layout:"", noPasswordMatch: false, noUniqueUsername: true});
+  		  });
   	  }
   	  else
-  	 	res.view("welcome/register", {template: "welcome/register", layout:"", noPasswordMatch: true, noUniqueUsername: false});
+  	 	   res.view("welcome/register", {template: "welcome/register", layout:"", noPasswordMatch: true, noUniqueUsername: false});
     },
-	
+
     authenticate: function(req,res)
     {
 	  User.findOneByUsername(req.param("username"), function(err, user)
@@ -55,20 +56,20 @@ module.exports = {
 		  	res.redirect("/")
 	  });
     },
-	
+
 	index: function(req,res)
 	{
 		res.view({
 			layout: ""
 		})
 	},
-	
+
 	register: function(req,res)
 	{
 		res.view({layout:"", noPasswordMatch: false, noUniqueUsername: false});
 	},
-  
-  
+
+
 
   /**
    * Overrides for the settings in `config/controllers.js`
@@ -76,5 +77,5 @@ module.exports = {
    */
   _config: {}
 
-  
+
 };

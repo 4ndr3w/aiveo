@@ -7,7 +7,9 @@
 
 module.exports = {
   adapter: 'tvdb',
+  connection: 'tvdb',
   schema: false,
+  autoPK: false,
 	attributes: {
 
     Actors: {
@@ -53,7 +55,9 @@ module.exports = {
       type:"integer"
     },
     SeriesID:{
-      type:"integer"
+      type:"integer",
+      unique: true,
+      primaryKey: true
     },
     SeriesName:{
       type:"string"
@@ -88,7 +92,7 @@ module.exports = {
     totalEpisodes:{
       type:"integer"
     },
-      
+
     reviews: {
       collection: "review",
       via: "series"
